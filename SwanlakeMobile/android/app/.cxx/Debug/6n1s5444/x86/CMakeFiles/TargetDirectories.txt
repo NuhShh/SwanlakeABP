@@ -1,0 +1,2 @@
+/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/.cxx/Debug/6n1s5444/x86/CMakeFiles/edit_cache.dir
+/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/.cxx/Debug/6n1s5444/x86/CMakeFiles/rebuild_cache.dir

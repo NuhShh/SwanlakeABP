@@ -1,0 +1,6 @@
+package com.mycompany.swanlake
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity() {
+}
