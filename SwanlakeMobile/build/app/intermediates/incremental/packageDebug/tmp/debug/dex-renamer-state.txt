@@ -1,4 +1,4 @@
-#Sun Jun 01 14:46:18 WIB 2025
+#Sun Jun 01 15:48:41 WIB 2025
 base.0=/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/build/app/intermediates/dex/debug/mergeExtDexDebug/classes.dex
 base.1=/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/build/app/intermediates/dex/debug/mergeLibDexDebug/0/classes.dex
 base.2=/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/build/app/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex

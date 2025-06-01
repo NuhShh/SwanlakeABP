@@ -31,4 +31,7 @@ Route::post('login', [AuthenticationController::class, 'login']);
 Route::post('/post/review', [ReviewController::class, 'newReview']) ->middleware('auth:sanctum');
 Route::get('/get/review', [ReviewController::class, 'getAllReview']) ->middleware('auth:sanctum');
 Route::get('/get/review/smartphone', [ReviewController::class, 'getSmartphoneReviews'])->middleware('auth:sanctum');
+Route::get('/get/review/console', [ReviewController::class, 'getConsoleReviews'])->middleware('auth:sanctum');
+Route::get('/get/review/accessories', [ReviewController::class, 'getAccessoriesReviews'])->middleware('auth:sanctum');
+Route::get('/get/review/desktoplaptop', [ReviewController::class, 'getDesktopLaptopReviews'])->middleware('auth:sanctum');
 Route::get('/get/review/{id}', [ReviewController::class, 'getReviewById'])->middleware('auth:sanctum');

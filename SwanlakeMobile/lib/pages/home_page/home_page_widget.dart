@@ -42,6 +42,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     _model.fetchReviews().then((_) {
       setState(() {});
     });
+
+    // Hilangkan fokus otomatis ke textfield agar keyboard tidak muncul saat halaman dibuka
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _model.textFieldFocusNode?.unfocus();
+    });
   }
 
   Future<void> fetchUserData() async {
@@ -70,7 +75,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     }
   }
 
-
   @override
   void dispose() {
     _model.dispose();
@@ -85,90 +89,75 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         FocusScope.of(context).unfocus();
         FocusManager.instance.primaryFocus?.unfocus();
       },
-        child: Scaffold(
-          key: scaffoldKey,
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+        appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
-          appBar: AppBar(
-            backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
-            automaticallyImplyLeading: false,
-            leading: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(12.0, 6.0, 0.0, 6.0),
-              child: InkWell(
-                splashColor: Colors.transparent,
-                focusColor: Colors.transparent,
-                hoverColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                onTap: () async {
-                  context.pushNamed(ProfilePageWidget.routeName);
-                },
-                child: Container(
-                  width: 44.0,
-                  height: 44.0,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).accent1,
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: FlutterFlowTheme.of(context).primaryText,
-                      width: 2.0,
-                    ),
+          automaticallyImplyLeading: false,
+          leading: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(12.0, 6.0, 0.0, 6.0),
+            child: InkWell(
+              splashColor: Colors.transparent,
+              focusColor: Colors.transparent,
+              hoverColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              onTap: () async {
+                context.pushNamed(ProfilePageWidget.routeName);
+              },
+              child: Container(
+                width: 44.0,
+                height: 44.0,
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).accent1,
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: FlutterFlowTheme.of(context).primaryText,
+                    width: 2.0,
                   ),
-                  child: Padding(
-                    padding: EdgeInsets.all(2.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(50.0),
-                      child: Image.network(
-                        'https://curupekspress.disway.id/upload/427dd2aa778b86629836f6745ba982b5.jpg',
-                        width: 300.0,
-                        height: 200.0,
-                        fit: BoxFit.cover,
-                      ),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(2.0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(50.0),
+                    child: Image.network(
+                      'https://static.vecteezy.com/system/resources/previews/002/318/271/non_2x/user-profile-icon-free-vector.jpg',
+                      width: 300.0,
+                      height: 200.0,
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
               ),
             ),
-            title: Text(
-              'Hai, ${userName ?? 'User'}',
-              style: FlutterFlowTheme.of(context).headlineMedium.override(
-                font: GoogleFonts.interTight(
-                  fontWeight:
-                  FlutterFlowTheme.of(context).headlineMedium.fontWeight,
-                  fontStyle:
-                  FlutterFlowTheme.of(context).headlineMedium.fontStyle,
-                ),
-                letterSpacing: 0.0,
+          ),
+          title: Text(
+            'Hai, ${userName ?? 'User'}',
+            style: FlutterFlowTheme.of(context).headlineMedium.override(
+              font: GoogleFonts.interTight(
                 fontWeight:
                 FlutterFlowTheme.of(context).headlineMedium.fontWeight,
                 fontStyle:
                 FlutterFlowTheme.of(context).headlineMedium.fontStyle,
               ),
+              letterSpacing: 0.0,
+              fontWeight:
+              FlutterFlowTheme.of(context).headlineMedium.fontWeight,
+              fontStyle:
+              FlutterFlowTheme.of(context).headlineMedium.fontStyle,
             ),
-            actions: [
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 16.0, 0.0),
-                child: FlutterFlowIconButton(
-                  borderRadius: 20.0,
-                  buttonSize: 40.0,
-                  icon: Icon(
-                    Icons.notifications_none,
-                    color: FlutterFlowTheme.of(context).primaryText,
-                    size: 24.0,
-                  ),
-                  onPressed: () {
-                    print('IconButton pressed ...');
-                  },
-                ),
-              ),
-            ],
-            centerTitle: false,
-            elevation: 0.0,
           ),
-          body: SafeArea(
-            top: true,
-            child: RefreshIndicator(
+          // Hilangkan tombol lonceng dengan mengosongkan actions
+          actions: [],
+          centerTitle: false,
+          elevation: 0.0,
+        ),
+        body: SafeArea(
+          top: true,
+          child: RefreshIndicator(
             onRefresh: () async {
-            await _model.fetchReviews();
-            setState(() {});  // agar UI update setelah refresh
+              await _model.fetchReviews();
+              setState(() {});  // update UI setelah refresh
             },
             child: SingleChildScrollView(
               child: Column(
@@ -205,7 +194,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                     child: TextFormField(
                       controller: _model.textController,
                       focusNode: _model.textFieldFocusNode,
-                      autofocus: true,
+                      autofocus: false, // supaya keyboard tidak langsung muncul
                       obscureText: false,
                       decoration: InputDecoration(
                         labelText: 'Search all reviews...',

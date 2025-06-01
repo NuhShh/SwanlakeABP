@@ -5,8 +5,6 @@ export '/pages/forgot_password/forgot_password_widget.dart'
     show ForgotPasswordWidget;
 export '/pages/change_password/change_password_widget.dart'
     show ChangePasswordWidget;
-export '/pages/editprofile_page/editprofile_page_widget.dart'
-    show EditprofilePageWidget;
 export '/pages/post_form_page/post_form_page_widget.dart'
     show PostFormPageWidget;
 export '/pages/edit_form/edit_form_widget.dart' show EditFormWidget;
@@ -16,7 +14,6 @@ export '/pages/top_rated_page/top_rated_page_widget.dart'
     show TopRatedPageWidget;
 export '/pages/latest_release_page/latest_release_page_widget.dart'
     show LatestReleasePageWidget;
-export '/pages/wishlist_page/wishlist_page_widget.dart' show WishlistPageWidget;
 export '/pages/compare_page/compare_page_widget.dart' show ComparePageWidget;
 export '/pages/consoles_page/consoles_page_widget.dart' show ConsolesPageWidget;
 export '/pages/smartphone_page/smartphone_page_widget.dart'

@@ -87,4 +87,28 @@ class ReviewController extends Controller
             'reviews' => $reviews
         ]);
     }
+
+    public function getConsoleReviews() {
+        $reviews = Review::where('productType', 'Console')->get();
+
+        return response()->json([
+            'reviews' => $reviews
+        ]);
+    }
+
+    public function getAccessoriesReviews() {
+        $reviews = Review::where('productType', 'Accessories')->get();
+
+        return response()->json([
+            'reviews' => $reviews
+        ]);
+    }
+
+    public function getDesktopLaptopReviews() {
+        $reviews = Review::where('productType', 'Desktop & Laptop')->get();
+
+        return response()->json([
+            'reviews' => $reviews
+        ]);
+    }
 }

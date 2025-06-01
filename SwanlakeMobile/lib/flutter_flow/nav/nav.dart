@@ -108,11 +108,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => ChangePasswordWidget(),
         ),
         FFRoute(
-          name: EditprofilePageWidget.routeName,
-          path: EditprofilePageWidget.routePath,
-          builder: (context, params) => EditprofilePageWidget(),
-        ),
-        FFRoute(
           name: PostFormPageWidget.routeName,
           path: PostFormPageWidget.routePath,
           builder: (context, params) => PostFormPageWidget(),
@@ -136,11 +131,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: LatestReleasePageWidget.routeName,
           path: LatestReleasePageWidget.routePath,
           builder: (context, params) => LatestReleasePageWidget(),
-        ),
-        FFRoute(
-          name: WishlistPageWidget.routeName,
-          path: WishlistPageWidget.routePath,
-          builder: (context, params) => WishlistPageWidget(),
         ),
         FFRoute(
           name: ComparePageWidget.routeName,
