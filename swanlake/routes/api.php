@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,9 +30,13 @@ Route::get('/test', function () {
 Route::post('register', [AuthenticationController::class, 'register']);
 Route::post('login', [AuthenticationController::class, 'login']);
 Route::post('/post/review', [ReviewController::class, 'newReview']) ->middleware('auth:sanctum');
-Route::get('/get/review', [ReviewController::class, 'getAllReview']) ->middleware('auth:sanctum');
+Route::get('/get/review', [ReviewController::class, 'getAllReviews']) ->middleware('auth:sanctum');
 Route::get('/get/review/smartphone', [ReviewController::class, 'getSmartphoneReviews'])->middleware('auth:sanctum');
 Route::get('/get/review/console', [ReviewController::class, 'getConsoleReviews'])->middleware('auth:sanctum');
 Route::get('/get/review/accessories', [ReviewController::class, 'getAccessoriesReviews'])->middleware('auth:sanctum');
 Route::get('/get/review/desktoplaptop', [ReviewController::class, 'getDesktopLaptopReviews'])->middleware('auth:sanctum');
 Route::get('/get/review/{id}', [ReviewController::class, 'getReviewById'])->middleware('auth:sanctum');
+Route::get('/get/user', [UserController::class, 'getAllUsers'])->middleware('auth:sanctum');
+Route::get('/get/user/{id}', [UserController::class, 'getUserById'])->middleware('auth:sanctum');
+Route::put('/update/user/{id}', [UserController::class, 'updateUser'])->middleware('auth:sanctum');
+Route::delete('/delete/user/{id}', [UserController::class, 'deleteUser'])->middleware('auth:sanctum');

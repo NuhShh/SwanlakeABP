@@ -298,7 +298,7 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget>
                                           text: 'Create Account',
                                         ),
                                         Tab(
-                                          text: 'Log In',
+                                          text: 'Sign In',
                                         ),
                                       ],
                                       controller: _model.tabBarController,
@@ -871,29 +871,6 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget>
                                                           contentPadding:
                                                           EdgeInsets.all(
                                                               24.0),
-                                                          suffixIcon: InkWell(
-                                                            onTap: () =>
-                                                                safeSetState(
-                                                                      () => _model
-                                                                      .passwordCreateVisibility2 =
-                                                                  !_model
-                                                                      .passwordCreateVisibility2,
-                                                                ),
-                                                            focusNode: FocusNode(
-                                                                skipTraversal:
-                                                                true),
-                                                            child: Icon(
-                                                              _model.passwordCreateVisibility2
-                                                                  ? Icons
-                                                                  .visibility_outlined
-                                                                  : Icons
-                                                                  .visibility_off_outlined,
-                                                              color: FlutterFlowTheme
-                                                                  .of(context)
-                                                                  .secondaryText,
-                                                              size: 24.0,
-                                                            ),
-                                                          ),
                                                         ),
                                                         style:
                                                         FlutterFlowTheme.of(
@@ -1512,8 +1489,9 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget>
                                                                   .titleSmall
                                                                   .fontStyle,
                                                             ),
-                                                            color: Colors
-                                                                .white,
+                                                            color: FlutterFlowTheme.of(
+                                                                context)
+                                                                .primaryText,
                                                             letterSpacing:
                                                             0.0,
                                                             fontWeight: FlutterFlowTheme.of(
@@ -1536,176 +1514,6 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget>
                                                           BorderRadius
                                                               .circular(
                                                               40.0),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Align(
-                                                    alignment:
-                                                    AlignmentDirectional(
-                                                        0.0, 0.0),
-                                                    child: Padding(
-                                                      padding:
-                                                      EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          0.0,
-                                                          0.0,
-                                                          0.0,
-                                                          16.0),
-                                                      child: FFButtonWidget(
-                                                        onPressed: () async {
-                                                          context.pushNamed(
-                                                              UsernReviewManagementPageWidget
-                                                                  .routeName);
-                                                        },
-                                                        text:
-                                                        'Log In As An Admin',
-                                                        options:
-                                                        FFButtonOptions(
-                                                          width: 230.0,
-                                                          height: 52.0,
-                                                          padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                              0.0,
-                                                              0.0,
-                                                              0.0,
-                                                              0.0),
-                                                          iconPadding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                              0.0,
-                                                              0.0,
-                                                              0.0,
-                                                              0.0),
-                                                          color: FlutterFlowTheme
-                                                              .of(context)
-                                                              .primary,
-                                                          textStyle:
-                                                          FlutterFlowTheme.of(
-                                                              context)
-                                                              .titleSmall
-                                                              .override(
-                                                            font: GoogleFonts
-                                                                .interTight(
-                                                              fontWeight: FlutterFlowTheme.of(
-                                                                  context)
-                                                                  .titleSmall
-                                                                  .fontWeight,
-                                                              fontStyle: FlutterFlowTheme.of(
-                                                                  context)
-                                                                  .titleSmall
-                                                                  .fontStyle,
-                                                            ),
-                                                            color: Colors
-                                                                .white,
-                                                            letterSpacing:
-                                                            0.0,
-                                                            fontWeight: FlutterFlowTheme.of(
-                                                                context)
-                                                                .titleSmall
-                                                                .fontWeight,
-                                                            fontStyle: FlutterFlowTheme.of(
-                                                                context)
-                                                                .titleSmall
-                                                                .fontStyle,
-                                                          ),
-                                                          elevation: 3.0,
-                                                          borderSide:
-                                                          BorderSide(
-                                                            color: Colors
-                                                                .transparent,
-                                                            width: 1.0,
-                                                          ),
-                                                          borderRadius:
-                                                          BorderRadius
-                                                              .circular(
-                                                              40.0),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Align(
-                                                    alignment:
-                                                    AlignmentDirectional(
-                                                        0.0, 0.0),
-                                                    child: Padding(
-                                                      padding:
-                                                      EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          0.0,
-                                                          0.0,
-                                                          0.0,
-                                                          16.0),
-                                                      child: FFButtonWidget(
-                                                        onPressed: () async {
-                                                          context.pushNamed(
-                                                              ForgotPasswordWidget
-                                                                  .routeName);
-                                                        },
-                                                        text:
-                                                        'Forgot Password?',
-                                                        options:
-                                                        FFButtonOptions(
-                                                          height: 44.0,
-                                                          padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                              32.0,
-                                                              0.0,
-                                                              32.0,
-                                                              0.0),
-                                                          iconPadding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                              0.0,
-                                                              0.0,
-                                                              0.0,
-                                                              0.0),
-                                                          color: FlutterFlowTheme
-                                                              .of(context)
-                                                              .secondaryBackground,
-                                                          textStyle:
-                                                          FlutterFlowTheme.of(
-                                                              context)
-                                                              .bodyMedium
-                                                              .override(
-                                                            font: GoogleFonts
-                                                                .inter(
-                                                              fontWeight:
-                                                              FontWeight
-                                                                  .bold,
-                                                              fontStyle: FlutterFlowTheme.of(
-                                                                  context)
-                                                                  .bodyMedium
-                                                                  .fontStyle,
-                                                            ),
-                                                            letterSpacing:
-                                                            0.0,
-                                                            fontWeight:
-                                                            FontWeight
-                                                                .bold,
-                                                            fontStyle: FlutterFlowTheme.of(
-                                                                context)
-                                                                .bodyMedium
-                                                                .fontStyle,
-                                                          ),
-                                                          elevation: 0.0,
-                                                          borderSide:
-                                                          BorderSide(
-                                                            color: FlutterFlowTheme
-                                                                .of(context)
-                                                                .secondaryBackground,
-                                                            width: 2.0,
-                                                          ),
-                                                          borderRadius:
-                                                          BorderRadius
-                                                              .circular(
-                                                              40.0),
-                                                          hoverColor:
-                                                          FlutterFlowTheme.of(
-                                                              context)
-                                                              .primaryBackground,
                                                         ),
                                                       ),
                                                     ),
