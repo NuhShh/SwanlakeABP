@@ -11,7 +11,9 @@ import 'edit_user_page_model.dart';
 export 'edit_user_page_model.dart';
 
 class EditUserPageWidget extends StatefulWidget {
-  const EditUserPageWidget({super.key});
+  final int? accountID;
+
+  const EditUserPageWidget({Key? key, this.accountID}) : super(key: key);
 
   static String routeName = 'EditUserPage';
   static String routePath = '/editUserPage';

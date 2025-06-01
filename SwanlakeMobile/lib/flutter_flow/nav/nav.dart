@@ -98,11 +98,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => SignUpPageWidget(),
         ),
         FFRoute(
-          name: ForgotPasswordWidget.routeName,
-          path: ForgotPasswordWidget.routePath,
-          builder: (context, params) => ForgotPasswordWidget(),
-        ),
-        FFRoute(
           name: ChangePasswordWidget.routeName,
           path: ChangePasswordWidget.routePath,
           builder: (context, params) => ChangePasswordWidget(),
@@ -115,7 +110,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: EditFormWidget.routeName,
           path: EditFormWidget.routePath,
-          builder: (context, params) => EditFormWidget(),
+          builder: (context, params) {
+            final reviewID = params.state.extraMap['reviewID'] as int?;
+            return EditFormWidget(reviewID: reviewID);
+          },
         ),
         FFRoute(
           name: AccessoriesPageWidget.routeName,
@@ -169,7 +167,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: EditUserPageWidget.routeName,
           path: EditUserPageWidget.routePath,
-          builder: (context, params) => EditUserPageWidget(),
+          builder: (context, params) {
+            final accountID = params.state.extraMap['accountID'] as int?;
+            return EditUserPageWidget(accountID: accountID);
+          },
         ),
         FFRoute(
           name: ReviewPageWidget.routeName,

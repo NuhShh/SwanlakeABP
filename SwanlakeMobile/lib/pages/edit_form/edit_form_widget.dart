@@ -11,7 +11,9 @@ import 'edit_form_model.dart';
 export 'edit_form_model.dart';
 
 class EditFormWidget extends StatefulWidget {
-  const EditFormWidget({super.key});
+  final int? reviewID;
+
+  const EditFormWidget({Key? key, this.reviewID}) : super(key: key);
 
   static String routeName = 'EditForm';
   static String routePath = '/editForm';
