@@ -79,4 +79,12 @@ class ReviewController extends Controller
             'review' => $review,
         ], 201);
     }
+
+    public function getSmartphoneReviews() {
+        $reviews = Review::where('productType', 'Smartphone')->get();
+
+        return response()->json([
+            'reviews' => $reviews
+        ]);
+    }
 }
