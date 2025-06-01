@@ -29,6 +29,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   String? userName;
+  List<ReviewItem> searchResults = [];
 
   @override
   void initState() {
@@ -40,10 +41,24 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
     fetchUserData();
     _model.fetchReviews().then((_) {
+      // Apply initial sorting/filtering if choice chip selected
+      if (_model.choiceChipsValue == 'Recent') {
+        _model.sortByRecent();
+      } else if (_model.choiceChipsValue == 'Top-Rated') {
+        _model.filterByTopRated();
+      }
       setState(() {});
     });
 
-    // Hilangkan fokus otomatis ke textfield agar keyboard tidak muncul saat halaman dibuka
+    // Listener search bar input
+    _model.textController!.addListener(() {
+      final query = _model.textController!.text;
+      final results = _model.searchReviews(query);
+      setState(() {
+        searchResults = results;
+      });
+    });
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _model.textFieldFocusNode?.unfocus();
     });
@@ -65,8 +80,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      print('RESPONSE JSON: $data'); //debug
-
       setState(() {
         userName = data['name'];
       });
@@ -78,7 +91,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
   @override
   void dispose() {
     _model.dispose();
-
     super.dispose();
   }
 
@@ -88,6 +100,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       onTap: () {
         FocusScope.of(context).unfocus();
         FocusManager.instance.primaryFocus?.unfocus();
+        setState(() {
+          searchResults = [];
+        });
       },
       child: Scaffold(
         key: scaffoldKey,
@@ -147,7 +162,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
               FlutterFlowTheme.of(context).headlineMedium.fontStyle,
             ),
           ),
-          // Hilangkan tombol lonceng dengan mengosongkan actions
           actions: [],
           centerTitle: false,
           elevation: 0.0,
@@ -157,7 +171,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           child: RefreshIndicator(
             onRefresh: () async {
               await _model.fetchReviews();
-              setState(() {});  // update UI setelah refresh
+              if (_model.choiceChipsValue == 'Recent') {
+                _model.sortByRecent();
+              } else if (_model.choiceChipsValue == 'Top-Rated') {
+                _model.filterByTopRated();
+              }
+              setState(() {});
             },
             child: SingleChildScrollView(
               child: Column(
@@ -165,7 +184,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+                    padding:
+                    EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
                     child: Text(
                       'Stay up to date with the latest news below.',
                       style: FlutterFlowTheme.of(context).labelMedium.override(
@@ -190,104 +210,141 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   ),
                   Padding(
                     padding:
-                    EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 8.0),
-                    child: TextFormField(
-                      controller: _model.textController,
-                      focusNode: _model.textFieldFocusNode,
-                      autofocus: false, // supaya keyboard tidak langsung muncul
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        labelText: 'Search all reviews...',
-                        labelStyle:
-                        FlutterFlowTheme.of(context).labelMedium.override(
-                          font: GoogleFonts.inter(
+                    EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          controller: _model.textController,
+                          focusNode: _model.textFieldFocusNode,
+                          autofocus: false,
+                          obscureText: false,
+                          decoration: InputDecoration(
+                            labelText: 'Search all reviews...',
+                            labelStyle:
+                            FlutterFlowTheme.of(context).labelMedium.override(
+                              font: GoogleFonts.inter(
+                                fontWeight: FlutterFlowTheme.of(context)
+                                    .labelMedium
+                                    .fontWeight,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                    .labelMedium
+                                    .fontStyle,
+                              ),
+                              letterSpacing: 0.0,
+                              fontWeight: FlutterFlowTheme.of(context)
+                                  .labelMedium
+                                  .fontWeight,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .labelMedium
+                                  .fontStyle,
+                            ),
+                            hintStyle:
+                            FlutterFlowTheme.of(context).labelMedium.override(
+                              font: GoogleFonts.inter(
+                                fontWeight: FlutterFlowTheme.of(context)
+                                    .labelMedium
+                                    .fontWeight,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                    .labelMedium
+                                    .fontStyle,
+                              ),
+                              letterSpacing: 0.0,
+                              fontWeight: FlutterFlowTheme.of(context)
+                                  .labelMedium
+                                  .fontWeight,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .labelMedium
+                                  .fontStyle,
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).alternate,
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).primary,
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).error,
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).error,
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                            contentPadding:
+                            EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 0.0, 0.0),
+                            suffixIcon: Icon(
+                              Icons.search_rounded,
+                              color: FlutterFlowTheme.of(context).secondaryText,
+                            ),
+                          ),
+                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            font: GoogleFonts.inter(
+                              fontWeight: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .fontWeight,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .fontStyle,
+                            ),
+                            letterSpacing: 0.0,
                             fontWeight: FlutterFlowTheme.of(context)
-                                .labelMedium
+                                .bodyMedium
                                 .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .labelMedium
-                                .fontStyle,
+                            fontStyle:
+                            FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                           ),
-                          letterSpacing: 0.0,
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .labelMedium
-                              .fontWeight,
-                          fontStyle: FlutterFlowTheme.of(context)
-                              .labelMedium
-                              .fontStyle,
+                          cursorColor: FlutterFlowTheme.of(context).primary,
+                          validator:
+                          _model.textControllerValidator.asValidator(context),
                         ),
-                        hintStyle:
-                        FlutterFlowTheme.of(context).labelMedium.override(
-                          font: GoogleFonts.inter(
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .labelMedium
-                                .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .labelMedium
-                                .fontStyle,
+                        if (searchResults.isNotEmpty)
+                          Container(
+                            height: 200,
+                            margin: EdgeInsets.only(top: 4),
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context).primaryBackground,
+                              border: Border.all(
+                                color: FlutterFlowTheme.of(context).alternate,
+                              ),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: ListView.builder(
+                              padding: EdgeInsets.zero,
+                              itemCount: searchResults.length,
+                              itemBuilder: (context, index) {
+                                final review = searchResults[index];
+                                return ListTile(
+                                  title: Text(review.reviewTitle),
+                                  onTap: () {
+                                    context.pushNamed(
+                                      ReviewPageWidget.routeName,
+                                      extra: {'reviewID': review.reviewID},
+                                    );
+                                    setState(() {
+                                      searchResults = [];
+                                      _model.textController!.text = review.reviewTitle;
+                                      FocusScope.of(context).unfocus();
+                                    });
+                                  },
+                                );
+                              },
+                            ),
                           ),
-                          letterSpacing: 0.0,
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .labelMedium
-                              .fontWeight,
-                          fontStyle: FlutterFlowTheme.of(context)
-                              .labelMedium
-                              .fontStyle,
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).alternate,
-                            width: 2.0,
-                          ),
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primary,
-                            width: 2.0,
-                          ),
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).error,
-                            width: 2.0,
-                          ),
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).error,
-                            width: 2.0,
-                          ),
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                        contentPadding:
-                        EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 0.0, 0.0),
-                        suffixIcon: Icon(
-                          Icons.search_rounded,
-                          color: FlutterFlowTheme.of(context).secondaryText,
-                        ),
-                      ),
-                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                        font: GoogleFonts.inter(
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .fontWeight,
-                          fontStyle: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .fontStyle,
-                        ),
-                        letterSpacing: 0.0,
-                        fontWeight: FlutterFlowTheme.of(context)
-                            .bodyMedium
-                            .fontWeight,
-                        fontStyle:
-                        FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                      ),
-                      cursorColor: FlutterFlowTheme.of(context).primary,
-                      validator:
-                      _model.textControllerValidator.asValidator(context),
+                      ],
                     ),
                   ),
                   Container(
@@ -417,8 +474,19 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 ChipData('Recent'),
                                 ChipData('Top-Rated')
                               ],
-                              onChanged: (val) => safeSetState(() =>
-                              _model.choiceChipsValue = val?.firstOrNull),
+                              onChanged: (val) async {
+                                safeSetState(() => _model.choiceChipsValue = val?.firstOrNull);
+
+                                await _model.fetchReviews();
+
+                                if (_model.choiceChipsValue == 'Recent') {
+                                  _model.sortByRecent();
+                                } else if (_model.choiceChipsValue == 'Top-Rated') {
+                                  _model.filterByTopRated();
+                                }
+
+                                setState(() {});
+                              },
                               selectedChipStyle: ChipStyle(
                                 backgroundColor:
                                 FlutterFlowTheme.of(context).primary,
@@ -508,7 +576,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 0.0, 0.0),
                     child: Text(
-                      'Popular Today',
+                      '',
                       style: FlutterFlowTheme.of(context).labelMedium.override(
                         font: GoogleFonts.inter(
                           fontWeight: FlutterFlowTheme.of(context)
@@ -548,7 +616,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // Image
                               Container(
                                 width: 100.0,
                                 height: 100.0,
@@ -570,7 +637,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 ),
                               ),
                               SizedBox(width: 12.0),
-                              // Title, cardDesc & "Read Now"
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,

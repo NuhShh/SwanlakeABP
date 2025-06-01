@@ -13,12 +13,16 @@ class ReviewItem {
   final String reviewTitle;
   final String imageName;
   final String cardDesc;
+  final DateTime created_at;
+  final double rating;
 
   ReviewItem({
     required this.reviewID,
     required this.reviewTitle,
     required this.imageName,
     required this.cardDesc,
+    required this.created_at,
+    required this.rating,
   });
 
   factory ReviewItem.fromJson(Map<String, dynamic> json) {
@@ -27,6 +31,8 @@ class ReviewItem {
       reviewTitle: json['reviewTitle'] ?? '',
       imageName: json['imageName'] ?? '',
       cardDesc: json['cardDesc'] ?? '',
+      created_at: DateTime.parse(json['created_at']),
+      rating: (json['rating'] as num).toDouble(),
     );
   }
 }
@@ -53,6 +59,12 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> with ChangeNotifier
   bool isLoadingReviews = false;
   String? reviewsError;
 
+  List<ReviewItem> searchReviews(String query) {
+    if (query.isEmpty) return [];
+    final lowerQuery = query.toLowerCase();
+    return reviews.where((r) => r.reviewTitle.toLowerCase().contains(lowerQuery)).toList();
+  }
+
   Future<void> fetchReviews() async {
     isLoadingReviews = true;
     reviewsError = null;
@@ -70,6 +82,9 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> with ChangeNotifier
         },
       );
 
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body);
         final List<dynamic> reviewsJson = jsonResponse['reviews'] ?? [];
@@ -78,7 +93,6 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> with ChangeNotifier
             .map((item) => ReviewItem.fromJson(item))
             .toList();
 
-        //Print json di console
         print('Full JSON response: $jsonResponse');
 
       } else {
@@ -91,6 +105,19 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> with ChangeNotifier
       notifyListeners();
     }
     print('Fetched reviews count: ${reviews.length}');
+  }
+
+  void sortByRecent() {
+    reviews.sort((a, b) => b.created_at.compareTo(a.created_at));
+    notifyListeners();
+  }
+
+  void filterByTopRated() {
+    reviews = reviews
+        .where((r) => r.rating >= 4.5)
+        .toList()
+      ..sort((a, b) => b.rating.compareTo(a.rating));
+    notifyListeners();
   }
 
   @override
