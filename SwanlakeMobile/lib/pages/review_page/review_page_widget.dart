@@ -9,9 +9,14 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'review_page_model.dart';
 export 'review_page_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'package:go_router/go_router.dart';
 
 class ReviewPageWidget extends StatefulWidget {
-  const ReviewPageWidget({super.key});
+  final int? reviewID;
+
+  const ReviewPageWidget({Key? key, this.reviewID}) : super(key: key);
 
   static String routeName = 'ReviewPage';
   static String routePath = '/reviewPage';
@@ -25,10 +30,71 @@ class _ReviewPageWidgetState extends State<ReviewPageWidget> {
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  String? imageName;
+  String? productType;
+  late int reviewID;
+  String? reviewTitle;
+  String? reviewText;
+  bool isLoading = false;
+  String? error;
+
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => ReviewPageModel());
+
+    if (widget.reviewID != null) {
+      reviewID = widget.reviewID!;
+      fetchReviewDetail();
+    } else {
+      error = 'Review ID tidak tersedia';
+    }
+  }
+
+  Future<void> fetchReviewDetail() async {
+    setState(() {
+      isLoading = true;
+      error = null;
+    });
+
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('auth_token');
+
+      if (token == null) throw Exception('Token not found');
+
+      final response = await http.get(
+        Uri.parse('http://10.0.2.2:8000/api/get/review/$reviewID'),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Accept': 'application/json',
+        },
+      );
+
+      print('Response review detail: ${response.body}');
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final review = data['review'];
+
+        setState(() {
+          reviewTitle = review['reviewTitle'] ?? '';
+          reviewText = review['reviewText'] ?? '';
+          imageName = review['imageName'] ?? '';
+          productType = review['productType'] ?? '';
+        });
+      } else {
+        throw Exception('Failed to load review: ${response.statusCode}');
+      }
+    } catch (e) {
+      setState(() {
+        error = e.toString();
+      });
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   @override
@@ -96,10 +162,16 @@ class _ReviewPageWidgetState extends State<ReviewPageWidget> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
                     child: Image.network(
-                      'https://www.apple.com/newsroom/images/2024/09/apple-debuts-iphone-16-pro-and-iphone-16-pro-max/article/Apple-iPhone-16-Pro-hero-geo-240909_inline.jpg.large.jpg',
+                      imageName ?? '',
                       width: double.infinity,
                       height: 330.0,
                       fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) => Container(
+                        width: double.infinity,
+                        height: 330.0,
+                        color: Colors.grey[300],
+                        child: Icon(Icons.broken_image, size: 100, color: Colors.grey),
+                      ),
                     ),
                   ),
                 ),
@@ -121,7 +193,7 @@ class _ReviewPageWidgetState extends State<ReviewPageWidget> {
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 8.0, 0.0, 8.0),
                               child: Text(
-                                'iPhone 16: Innovation or Just Another Expensive Upgrade?',
+                                reviewTitle ?? 'Loading...',
                                 style: FlutterFlowTheme.of(context)
                                     .headlineMedium
                                     .override(
@@ -144,7 +216,7 @@ class _ReviewPageWidgetState extends State<ReviewPageWidget> {
                               ),
                             ),
                             Text(
-                              'Smartphone',
+                              productType ?? 'Loading...',
                               textAlign: TextAlign.start,
                               style: FlutterFlowTheme.of(context)
                                   .labelSmall
@@ -375,7 +447,7 @@ class _ReviewPageWidgetState extends State<ReviewPageWidget> {
                             Align(
                               alignment: AlignmentDirectional(-1.0, 0.0),
                               child: Text(
-                                'Doctor Bio',
+                                'Description',
                                 style: FlutterFlowTheme.of(context)
                                     .bodySmall
                                     .override(
@@ -399,7 +471,7 @@ class _ReviewPageWidgetState extends State<ReviewPageWidget> {
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 8.0, 0.0, 12.0),
                                 child: Text(
-                                  'The iPhone 16 arrives with incremental upgrades, but is it truly a game-changer or just another routine refresh? While Apple touts improvements in battery life, camera performance, and AI-driven features, the design remains largely unchanged, and the price continues to climb. The so-called revolutionary features, like enhanced computational photography and a slightly brighter display, feel more like refinements than innovations. With Android competitors pushing boundaries in foldable tech and AI integration, the iPhone 16 raises the question: Is Apple playing it too safe, relying on brand loyalty rather than real breakthroughs?',
+                                  reviewText ?? '',
                                   textAlign: TextAlign.justify,
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium

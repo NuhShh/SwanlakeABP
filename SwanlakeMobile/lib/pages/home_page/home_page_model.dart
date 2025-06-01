@@ -9,14 +9,21 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ReviewItem {
+  final int reviewID;
   final String reviewTitle;
   final String imageName;
   final String cardDesc;
 
-  ReviewItem({required this.reviewTitle, required this.imageName, required this.cardDesc,});
+  ReviewItem({
+    required this.reviewID,
+    required this.reviewTitle,
+    required this.imageName,
+    required this.cardDesc,
+  });
 
   factory ReviewItem.fromJson(Map<String, dynamic> json) {
     return ReviewItem(
+      reviewID: json['reviewID'],
       reviewTitle: json['reviewTitle'] ?? '',
       imageName: json['imageName'] ?? '',
       cardDesc: json['cardDesc'] ?? '',
@@ -83,6 +90,7 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> with ChangeNotifier
       isLoadingReviews = false;
       notifyListeners();
     }
+    print('Fetched reviews count: ${reviews.length}');
   }
 
   @override

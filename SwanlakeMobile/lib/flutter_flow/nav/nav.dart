@@ -184,7 +184,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: ReviewPageWidget.routeName,
           path: ReviewPageWidget.routePath,
-          builder: (context, params) => ReviewPageWidget(),
+          builder: (context, params) {
+            final reviewID = params.state.extraMap['reviewID'] as int?;
+            return ReviewPageWidget(reviewID: reviewID);
+          },
         ),
         FFRoute(
           name: UsernReviewManagementPageWidget.routeName,
