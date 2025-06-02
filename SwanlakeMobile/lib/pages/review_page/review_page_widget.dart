@@ -9,6 +9,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'review_page_model.dart';
 export 'review_page_model.dart';
+import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:go_router/go_router.dart';
@@ -35,6 +36,20 @@ class _ReviewPageWidgetState extends State<ReviewPageWidget> {
   late int reviewID;
   String? reviewTitle;
   String? reviewText;
+  double? reviewRating;
+  String? processor;
+  String? processorDesc;
+  String? ram;
+  String? ramDesc;
+  String? storage;
+  String? storageDesc;
+  String? display;
+  String? displayDesc;
+  String? battery;
+  String? batteryDesc;
+  String? camera;
+  String? cameraDesc;
+
   bool isLoading = false;
   String? error;
 
@@ -82,6 +97,19 @@ class _ReviewPageWidgetState extends State<ReviewPageWidget> {
           reviewText = review['reviewText'] ?? '';
           imageName = review['imageName'] ?? '';
           productType = review['productType'] ?? '';
+          reviewRating = (review['rating'] as num?)?.toDouble() ?? 0.0;
+          processor = review['processor'] ?? '';
+          processorDesc = review['processorDesc'] ?? '';
+          ram = review['ram'] ?? '';
+          ramDesc = review['ramDesc'] ?? '';
+          storage = review['storage'] ?? '';
+          storageDesc = review['storageDesc'] ?? '';
+          display = review['display'] ?? '';
+          displayDesc = review['displayDesc'] ?? '';
+          battery = review['battery'] ?? '';
+          batteryDesc = review['batteryDesc'] ?? '';
+          camera = review['camera'] ?? '';
+          cameraDesc = review['cameraDesc'] ?? '';
         });
       } else {
         throw Exception('Failed to load review: ${response.statusCode}');
@@ -100,8 +128,29 @@ class _ReviewPageWidgetState extends State<ReviewPageWidget> {
   @override
   void dispose() {
     _model.dispose();
-
     super.dispose();
+  }
+
+  Widget specRow(String label, String value, String? desc) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '$label: $value',
+            style: FlutterFlowTheme.of(context).bodyMedium.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          if (desc != null && desc.isNotEmpty)
+            Text(
+              desc,
+              style: FlutterFlowTheme.of(context).bodyMedium,
+            ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -134,28 +183,26 @@ class _ReviewPageWidgetState extends State<ReviewPageWidget> {
           title: Text(
             'Details',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
-                  font: GoogleFonts.interTight(
-                    fontWeight:
-                        FlutterFlowTheme.of(context).headlineMedium.fontWeight,
-                    fontStyle:
-                        FlutterFlowTheme.of(context).headlineMedium.fontStyle,
-                  ),
-                  letterSpacing: 0.0,
-                  fontWeight:
-                      FlutterFlowTheme.of(context).headlineMedium.fontWeight,
-                  fontStyle:
-                      FlutterFlowTheme.of(context).headlineMedium.fontStyle,
-                ),
+              font: GoogleFonts.interTight(
+                fontWeight:
+                FlutterFlowTheme.of(context).headlineMedium.fontWeight,
+                fontStyle:
+                FlutterFlowTheme.of(context).headlineMedium.fontStyle,
+              ),
+              letterSpacing: 0.0,
+            ),
           ),
-          actions: [],
           centerTitle: false,
           elevation: 0.0,
         ),
         body: SafeArea(
           top: true,
-          child: SingleChildScrollView(
+          child: isLoading
+              ? Center(child: CircularProgressIndicator())
+              : error != null
+              ? Center(child: Text('Error: $error'))
+              : SingleChildScrollView(
             child: Column(
-              mainAxisSize: MainAxisSize.max,
               children: [
                 Padding(
                   padding: EdgeInsets.all(8.0),
@@ -166,382 +213,185 @@ class _ReviewPageWidgetState extends State<ReviewPageWidget> {
                       width: double.infinity,
                       height: 330.0,
                       fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) => Container(
-                        width: double.infinity,
-                        height: 330.0,
-                        color: Colors.grey[300],
-                        child: Icon(Icons.broken_image, size: 100, color: Colors.grey),
-                      ),
+                      errorBuilder: (context, error, stackTrace) =>
+                          Container(
+                            width: double.infinity,
+                            height: 330.0,
+                            color: Colors.grey[300],
+                            child: Icon(Icons.broken_image,
+                                size: 100, color: Colors.grey),
+                          ),
                     ),
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 8.0, 8.0),
+                  padding: EdgeInsets.all(8.0),
                   child: Container(
-                    width: double.infinity,
                     decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                      color: FlutterFlowTheme.of(context)
+                          .secondaryBackground,
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     child: Padding(
                       padding: EdgeInsets.all(12.0),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 8.0, 0.0, 8.0),
-                              child: Text(
-                                reviewTitle ?? 'Loading...',
-                                style: FlutterFlowTheme.of(context)
-                                    .headlineMedium
-                                    .override(
-                                      font: GoogleFonts.interTight(
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .headlineMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .headlineMedium
-                                            .fontStyle,
-                                      ),
-                                      letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .headlineMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .headlineMedium
-                                          .fontStyle,
-                                    ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            reviewTitle ?? '',
+                            style: FlutterFlowTheme.of(context)
+                                .headlineMedium,
+                          ),
+                          Text(
+                            productType ?? '',
+                            style: FlutterFlowTheme.of(context)
+                                .labelSmall,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 12.0),
+                            child: RatingBar.builder(
+                              onRatingUpdate: (newValue) => {},
+                              itemBuilder: (context, index) => Icon(
+                                Icons.star_rounded,
+                                color: FlutterFlowTheme.of(context)
+                                    .warning,
                               ),
+                              direction: Axis.horizontal,
+                              initialRating:
+                              _model.ratingBarValue ??=
+                                  reviewRating ?? 0.0,
+                              allowHalfRating: true,
+                              ignoreGestures: true,
+                              unratedColor:
+                              FlutterFlowTheme.of(context)
+                                  .alternate,
+                              itemCount: 5,
+                              itemSize: 24.0,
+                              glowColor:
+                              FlutterFlowTheme.of(context)
+                                  .warning,
                             ),
-                            Text(
-                              productType ?? 'Loading...',
-                              textAlign: TextAlign.start,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 12.0),
+                            child: Row(
+                              mainAxisAlignment:
+                              MainAxisAlignment.center,
+                              children: [
+                                InkWell(
+                                  onTap: () async {
+                                    await showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      backgroundColor:
+                                      Colors.transparent,
+                                      context: context,
+                                      builder: (context) {
+                                        return Padding(
+                                          padding:
+                                          MediaQuery.viewInsetsOf(
+                                              context),
+                                          child:
+                                          CommentsThreadWidget(),
+                                        );
+                                      },
+                                    ).then((value) =>
+                                        safeSetState(() {}));
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.comment,
+                                        color:
+                                        FlutterFlowTheme.of(
+                                            context)
+                                            .primaryText,
+                                      ),
+                                      SizedBox(width: 6),
+                                      Text(
+                                        'Comments',
+                                        style:
+                                        FlutterFlowTheme.of(
+                                            context)
+                                            .bodyMedium,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Text(
+                            'Description',
+                            style: FlutterFlowTheme.of(context)
+                                .bodySmall
+                                .copyWith(
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: Text(
+                              reviewText ?? '',
+                              textAlign: TextAlign.justify,
                               style: FlutterFlowTheme.of(context)
-                                  .labelSmall
-                                  .override(
-                                    font: GoogleFonts.inter(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .labelSmall
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .labelSmall
-                                          .fontStyle,
-                                    ),
-                                    letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .labelSmall
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .labelSmall
-                                        .fontStyle,
-                                  ),
+                                  .bodyMedium,
                             ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 12.0, 0.0, 0.0),
-                              child: RatingBar.builder(
-                                onRatingUpdate: (newValue) => safeSetState(
-                                    () => _model.ratingBarValue = newValue),
-                                itemBuilder: (context, index) => Icon(
-                                  Icons.star_rounded,
-                                  color: FlutterFlowTheme.of(context).warning,
-                                ),
-                                direction: Axis.horizontal,
-                                initialRating: _model.ratingBarValue ??= 4.0,
-                                unratedColor:
-                                    FlutterFlowTheme.of(context).alternate,
-                                itemCount: 5,
-                                itemSize: 24.0,
-                                glowColor: FlutterFlowTheme.of(context).warning,
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 12.0, 0.0, 12.0),
-                              child: Container(
-                                width: double.infinity,
-                                height: 70.0,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  borderRadius: BorderRadius.circular(12.0),
-                                  border: Border.all(
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    width: 2.0,
-                                  ),
-                                ),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Expanded(
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    8.0, 0.0, 12.0, 0.0),
-                                            child: Text(
-                                              'Wishlist',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        font: GoogleFonts.inter(
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontStyle,
-                                                        ),
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .fontStyle,
-                                                      ),
-                                            ),
-                                          ),
-                                          Align(
-                                            alignment:
-                                                AlignmentDirectional(1.0, 0.0),
-                                            child: Icon(
-                                              Icons.favorite_border,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              size: 24.0,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 100.0,
-                                      child: VerticalDivider(
-                                        thickness: 1.0,
-                                        indent: 12.0,
-                                        endIndent: 12.0,
-                                        color: FlutterFlowTheme.of(context)
-                                            .alternate,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: InkWell(
-                                        splashColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        hoverColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        onTap: () async {
-                                          await showModalBottomSheet(
-                                            isScrollControlled: true,
-                                            backgroundColor: Colors.transparent,
-                                            enableDrag: false,
-                                            context: context,
-                                            builder: (context) {
-                                              return GestureDetector(
-                                                onTap: () {
-                                                  FocusScope.of(context)
-                                                      .unfocus();
-                                                  FocusManager
-                                                      .instance.primaryFocus
-                                                      ?.unfocus();
-                                                },
-                                                child: Padding(
-                                                  padding:
-                                                      MediaQuery.viewInsetsOf(
-                                                          context),
-                                                  child: CommentsThreadWidget(),
-                                                ),
-                                              );
-                                            },
-                                          ).then(
-                                              (value) => safeSetState(() {}));
-                                        },
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      0.0, 12.0, 0.0, 12.0),
-                                              child: Icon(
-                                                Icons.comment,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryText,
-                                                size: 24.0,
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      8.0, 0.0, 12.0, 0.0),
-                                              child: Text(
-                                                'Comments',
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyMedium
-                                                    .override(
-                                                      font: GoogleFonts.inter(
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .fontStyle,
-                                                      ),
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryText,
-                                                      letterSpacing: 0.0,
-                                                      fontWeight:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .fontWeight,
-                                                      fontStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .fontStyle,
-                                                    ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Align(
-                              alignment: AlignmentDirectional(-1.0, 0.0),
-                              child: Text(
-                                'Description',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodySmall
-                                    .override(
-                                      font: GoogleFonts.inter(
-                                        fontWeight: FontWeight.bold,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodySmall
-                                            .fontStyle,
-                                      ),
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.bold,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodySmall
-                                          .fontStyle,
-                                    ),
-                              ),
-                            ),
-                            Align(
-                              alignment: AlignmentDirectional(-1.0, 0.0),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 8.0, 0.0, 12.0),
-                                child: Text(
-                                  reviewText ?? '',
-                                  textAlign: TextAlign.justify,
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        font: GoogleFonts.inter(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                        ),
-                                        letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
-                                ),
-                              ),
-                            ),
-                            FFButtonWidget(
+                          ),
+                          SizedBox(height: 16.0),
+                          Text(
+                            'Specifications',
+                            style: FlutterFlowTheme.of(context)
+                                .bodySmall
+                                .copyWith(
+                                fontWeight: FontWeight.bold),
+                          ),
+                          if (processor != null && processor!.isNotEmpty)
+                            specRow('Processor', processor!, processorDesc),
+                          if (ram != null && ram!.isNotEmpty)
+                            specRow('RAM', ram!, ramDesc),
+                          if (storage != null && storage!.isNotEmpty)
+                            specRow('Storage', storage!, storageDesc),
+                          if (display != null && display!.isNotEmpty)
+                            specRow('Display', display!, displayDesc),
+                          if (battery != null && battery!.isNotEmpty)
+                            specRow('Battery', battery!, batteryDesc),
+                          if (camera != null && camera!.isNotEmpty)
+                            specRow('Camera', camera!, cameraDesc),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 16.0),
+                            child: FFButtonWidget(
                               onPressed: () async {
-                                context.pushNamed(ComparePageWidget.routeName);
+                                context.pushNamed(
+                                    ComparePageWidget.routeName);
                               },
                               text: 'Compare Products',
                               options: FFButtonOptions(
-                                width: 500.0,
+                                width: double.infinity,
                                 height: 40.0,
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 0.0, 16.0, 0.0),
-                                iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                color: FlutterFlowTheme.of(context)
+                                color:
+                                FlutterFlowTheme.of(context)
                                     .secondaryBackground,
-                                textStyle: FlutterFlowTheme.of(context)
+                                textStyle:
+                                FlutterFlowTheme.of(context)
                                     .titleSmall
-                                    .override(
-                                      font: GoogleFonts.interTight(
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .titleSmall
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .titleSmall
-                                            .fontStyle,
-                                      ),
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .titleSmall
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .titleSmall
-                                          .fontStyle,
-                                    ),
+                                    .copyWith(
+                                  color:
+                                  FlutterFlowTheme.of(
+                                      context)
+                                      .primaryText,
+                                ),
                                 elevation: 0.0,
                                 borderSide: BorderSide(
                                   color:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                  FlutterFlowTheme.of(context)
+                                      .primaryText,
                                 ),
-                                borderRadius: BorderRadius.circular(8.0),
+                                borderRadius:
+                                BorderRadius.circular(8.0),
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   ),

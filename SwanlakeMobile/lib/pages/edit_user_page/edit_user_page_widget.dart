@@ -4,7 +4,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'edit_user_page_model.dart';
 import 'package:http/http.dart' as http;
@@ -28,10 +27,10 @@ class _EditUserPageWidgetState extends State<EditUserPageWidget> {
   String? name;
   String? role;
   String? email;
-  String? password;
   bool isLoading = false;
   late int accountID;
-  String? error;
+  late int loggedInAccountID;
+  bool isLoggedInIDLoaded = false;
   String? selectedRole;
 
   @override
@@ -46,24 +45,36 @@ class _EditUserPageWidgetState extends State<EditUserPageWidget> {
     _model.emailFocusNode ??= FocusNode();
     _model.phoneNumberFocusNode ??= FocusNode();
 
+    initData(); // 👈 Load ID login dan detail user
+  }
+
+  Future<void> initData() async {
+    await loadLoggedInAccountID();
+
     if (widget.accountID != null) {
       accountID = widget.accountID!;
-      fetchUserDetail();
+      await fetchUserDetail();
     }
+  }
+
+  Future<void> loadLoggedInAccountID() async {
+    final prefs = await SharedPreferences.getInstance();
+    loggedInAccountID = prefs.getInt('account_id') ?? -1;
+    print("🔐 loggedInAccountID loaded: $loggedInAccountID");
+    setState(() {
+      isLoggedInIDLoaded = true;
+    });
   }
 
   Future<void> fetchUserDetail() async {
     setState(() {
       isLoading = true;
-      error = null;
     });
 
     try {
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('auth_token');
-      if (token == null) {
-        throw Exception('Token not found');
-      }
+      if (token == null) throw Exception('Token not found');
 
       final response = await http.get(
         Uri.parse('http://10.0.2.2:8000/api/get/user/$accountID'),
@@ -81,7 +92,7 @@ class _EditUserPageWidgetState extends State<EditUserPageWidget> {
           name = user['name'];
           role = user['role'];
           email = user['email'];
-          selectedRole = role;  // Set default role to the current role
+          selectedRole = role;
           _model.fullNameTextController.text = name ?? '';
           _model.emailTextController.text = email ?? '';
         });
@@ -89,9 +100,7 @@ class _EditUserPageWidgetState extends State<EditUserPageWidget> {
         throw Exception('Failed to load user data');
       }
     } catch (e) {
-      setState(() {
-        error = e.toString();
-      });
+      print("❌ Error fetchUserDetail: $e");
     } finally {
       setState(() {
         isLoading = false;
@@ -107,9 +116,7 @@ class _EditUserPageWidgetState extends State<EditUserPageWidget> {
     try {
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('auth_token');
-      if (token == null) {
-        throw Exception('Token not found');
-      }
+      if (token == null) throw Exception('Token not found');
 
       final response = await http.put(
         Uri.parse('http://10.0.2.2:8000/api/update/user/$accountID'),
@@ -127,18 +134,18 @@ class _EditUserPageWidgetState extends State<EditUserPageWidget> {
       );
 
       if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        // Optionally show success SnackBar or dialog
         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("User updated successfully")));
+          SnackBar(content: Text("User updated successfully")),
+        );
       } else {
-        // Show error message
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text("Failed to update user: ${response.body}")));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Failed to update user: ${response.body}")),
+        );
       }
     } catch (e) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Error: $e")));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error: $e")),
+      );
     } finally {
       setState(() {
         isLoading = false;
@@ -153,8 +160,10 @@ class _EditUserPageWidgetState extends State<EditUserPageWidget> {
       throw Exception('Token not found');
     }
 
-    // Check if the user is trying to delete their own account
-    if (accountID == widget.accountID) {
+    print("🗑️ Deleting user: accountID=$accountID, loggedInAccountID=$loggedInAccountID");
+
+    if (accountID == loggedInAccountID) {
+      print("🚫 BLOCKED: User tried to delete own account.");
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("You cannot delete your own account."),
         backgroundColor: Colors.red,
@@ -172,16 +181,19 @@ class _EditUserPageWidgetState extends State<EditUserPageWidget> {
       );
 
       if (response.statusCode == 200) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text("User deleted successfully")));
-        Navigator.pop(context); // Go back to the previous screen
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("User deleted successfully")),
+        );
+        Navigator.pop(context);
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text("Failed to delete user: ${response.body}")));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Failed to delete user: ${response.body}")),
+        );
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("Error: $e")));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error: $e")),
+      );
     }
   }
 
@@ -194,188 +206,135 @@ class _EditUserPageWidgetState extends State<EditUserPageWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
-          automaticallyImplyLeading: false,
-          title: Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Edit User With Id = $accountID',
-                style: FlutterFlowTheme.of(context).headlineMedium.override(
-                  font: GoogleFonts.interTight(
-                    fontWeight: FlutterFlowTheme.of(context)
-                        .headlineMedium
-                        .fontWeight,
-                    fontStyle: FlutterFlowTheme.of(context)
-                        .headlineMedium
-                        .fontStyle,
-                  ),
-                  letterSpacing: 0.0,
-                  fontWeight: FlutterFlowTheme.of(context)
-                      .headlineMedium
-                      .fontWeight,
-                  fontStyle:
-                  FlutterFlowTheme.of(context).headlineMedium.fontStyle,
-                ),
-              ),
-            ],
+          title: Text(
+            'Edit User With Id = $accountID',
+            style: FlutterFlowTheme.of(context).headlineMedium.override(
+              font: GoogleFonts.interTight(),
+              letterSpacing: 0.0,
+            ),
           ),
           actions: [
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 12.0, 8.0),
+              padding: const EdgeInsets.only(right: 12.0),
               child: FlutterFlowIconButton(
-                borderColor: FlutterFlowTheme.of(context).alternate,
-                borderRadius: 12.0,
-                borderWidth: 1.0,
-                buttonSize: 40.0,
-                fillColor: FlutterFlowTheme.of(context).secondaryBackground,
-                icon: Icon(
-                  Icons.close_rounded,
-                  color: FlutterFlowTheme.of(context).primaryText,
-                  size: 24.0,
-                ),
-                onPressed: () async {
-                  context.pop();
-                },
+                icon: Icon(Icons.close_rounded),
+                onPressed: () => context.pop(),
               ),
             ),
           ],
-          centerTitle: false,
-          elevation: 0.0,
+          elevation: 0,
         ),
-        body: SafeArea(
-          top: true,
+        body: isLoading
+            ? Center(child: CircularProgressIndicator())
+            : SafeArea(
           child: Form(
             key: _model.formKey,
-            autovalidateMode: AutovalidateMode.disabled,
             child: Column(
-              mainAxisSize: MainAxisSize.max,
               children: [
                 Expanded(
                   child: SingleChildScrollView(
+                    padding: EdgeInsets.all(16),
                     child: Column(
-                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              TextFormField(
-                                controller: _model.fullNameTextController,
-                                decoration: InputDecoration(
-                                  labelText: 'Username',
-                                ),
-                              ),
-                              SizedBox(height: 20),
-                              Text('Role'),
-                              DropdownButton<String>(
-                                value: selectedRole,
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    selectedRole = newValue;
-                                  });
-                                },
-                                items: <String>['USER', 'ADMIN']
-                                    .map<DropdownMenuItem<String>>(
-                                        (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
-                              ),
-                              SizedBox(height: 20),
-                              TextFormField(
-                                controller: _model.emailTextController,
-                                decoration: InputDecoration(
-                                  labelText: 'Email',
-                                ),
-                              ),
-                              SizedBox(height: 20),
-                              TextFormField(
-                                controller: _model.phoneNumberTextController,
-                                decoration: InputDecoration(
-                                  labelText: 'Password (Leave empty to keep current)',
-                                ),
-                                obscureText: true,
-                              ),
-                              SizedBox(height: 20),
-                              FFButtonWidget(
-                                onPressed: updateUser,
-                                text: 'Confirm',
-                                options: FFButtonOptions(
-                                  width: 170.0,
-                                  height: 40.0,
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .override(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16,
+                        TextFormField(
+                          controller: _model.fullNameTextController,
+                          decoration: InputDecoration(labelText: 'Username'),
+                        ),
+                        SizedBox(height: 20),
+                        Text('Role'),
+                        DropdownButton<String>(
+                          value: selectedRole,
+                          onChanged: (newValue) =>
+                              setState(() => selectedRole = newValue),
+                          items: ['USER', 'ADMIN']
+                              .map((role) => DropdownMenuItem(
+                            value: role,
+                            child: Text(role),
+                          ))
+                              .toList(),
+                        ),
+                        SizedBox(height: 20),
+                        TextFormField(
+                          controller: _model.emailTextController,
+                          decoration: InputDecoration(labelText: 'Email'),
+                        ),
+                        SizedBox(height: 20),
+                        TextFormField(
+                          controller: _model.phoneNumberTextController,
+                          decoration: InputDecoration(
+                            labelText:
+                            'Password (Leave empty to keep current)',
+                          ),
+                          obscureText: true,
+                        ),
+                        SizedBox(height: 20),
+                        FFButtonWidget(
+                          onPressed: updateUser,
+                          text: 'Confirm',
+                          options: FFButtonOptions(
+                            width: 170,
+                            height: 40,
+                            color: FlutterFlowTheme.of(context).primary,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
+                            ),
+                            elevation: 0,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        FFButtonWidget(
+                          onPressed: isLoggedInIDLoaded
+                              ? () async {
+                            bool? shouldDelete = await showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: Text('Confirm Deletion'),
+                                content: Text(
+                                    'Are you sure you want to delete this user?'),
+                                actions: [
+                                  TextButton(
+                                    child: Text('Cancel'),
+                                    onPressed: () =>
+                                        Navigator.pop(context, false),
                                   ),
-                                  elevation: 0,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
+                                  TextButton(
+                                    child: Text('Delete'),
+                                    onPressed: () =>
+                                        Navigator.pop(context, true),
+                                  ),
+                                ],
                               ),
-                              SizedBox(height: 20),
-                              FFButtonWidget(
-                                onPressed: () async {
-                                  // Show confirmation dialog
-                                  bool? shouldDelete = await showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        title: Text('Confirm Deletion'),
-                                        content: Text(
-                                            'Are you sure you want to delete this user?'),
-                                        actions: [
-                                          TextButton(
-                                            child: Text('Cancel'),
-                                            onPressed: () {
-                                              Navigator.of(context).pop(false);
-                                            },
-                                          ),
-                                          TextButton(
-                                            child: Text('Delete'),
-                                            onPressed: () {
-                                              Navigator.of(context).pop(true);
-                                            },
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
+                            );
 
-                                  if (shouldDelete == true) {
-                                    await deleteUser();
-                                  }
-                                },
-                                text: 'Delete This User',
-                                options: FFButtonOptions(
-                                  width: 170.0,
-                                  height: 40.0,
-                                  color: Colors.red,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .override(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16,
-                                  ),
-                                  elevation: 0,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                            ],
+                            if (shouldDelete == true) {
+                              await deleteUser();
+                            }
+                          }
+                              : null,
+                          text: 'Delete This User',
+                          options: FFButtonOptions(
+                            width: 170,
+                            height: 40,
+                            color: Colors.red,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
+                            ),
+                            elevation: 0,
+                            borderRadius: BorderRadius.circular(8),
                           ),
                         ),
                       ],
