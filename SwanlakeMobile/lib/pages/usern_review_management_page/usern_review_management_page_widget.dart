@@ -1,3 +1,5 @@
+import 'package:swanlake/flutter_flow/flutter_flow_icon_button.dart';
+
 import '../../flutter_flow/form_field_controller.dart';
 import '../edit_form/edit_form_widget.dart';
 import '../edit_user_page/edit_user_page_widget.dart';
@@ -165,7 +167,7 @@ class _UsernReviewManagementPageWidgetState
                                 onTap: () {
                                   context.pushNamed(
                                     EditUserPageWidget.routeName,
-                                    extra: {'reviewID': user.accountID},
+                                    extra: {'accountID': user.accountID},
                                   );
                                 },
                               );
@@ -210,6 +212,26 @@ class _UsernReviewManagementPageWidgetState
                                   'Pilih kategori di atas')),
                         ),
                       ],
+                    ),
+                    Positioned(
+                      top: 16,
+                      right: 16,
+                      child: FlutterFlowIconButton(
+                        borderColor: FlutterFlowTheme.of(context).alternate,
+                        borderRadius: 12.0,
+                        borderWidth: 1.0,
+                        buttonSize: 40.0,
+                        fillColor: FlutterFlowTheme.of(context).secondaryBackground,
+                        icon: Icon(
+                          Icons.refresh,
+                          color: FlutterFlowTheme.of(context).primaryText,
+                          size: 24.0,
+                        ),
+                        onPressed: () async {
+                          await model.loadData();
+                          safeSetState(() {});
+                        },
+                      ),
                     ),
                     Positioned(
                       bottom: 16,

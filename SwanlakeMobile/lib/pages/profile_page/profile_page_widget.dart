@@ -512,7 +512,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 0.0, 0.0),
                           child: Text(
-                            'User & Review Management',
+                            'Admin Dashboard',
                             style: FlutterFlowTheme.of(context).labelMedium.override(
                               font: GoogleFonts.inter(
                                 fontWeight: FlutterFlowTheme.of(context).labelMedium.fontWeight,
