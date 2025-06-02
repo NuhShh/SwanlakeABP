@@ -1,34 +1,34 @@
-com.mycompany.swanlake.app-jetified-core-1.0.0-0 /Users/farisdzulfiqar/.gradle/caches/transforms-3/009c5df562081d4b7b238cb604538cc1/transformed/jetified-core-1.0.0/res
-com.mycompany.swanlake.app-jetified-lifecycle-process-2.7.0-1 /Users/farisdzulfiqar/.gradle/caches/transforms-3/025a519efc7e7e9feceab474293f9f99/transformed/jetified-lifecycle-process-2.7.0/res
-com.mycompany.swanlake.app-jetified-savedstate-1.2.1-2 /Users/farisdzulfiqar/.gradle/caches/transforms-3/095d8d389c953609cbeb9a59131e5bb4/transformed/jetified-savedstate-1.2.1/res
-com.mycompany.swanlake.app-browser-1.8.0-3 /Users/farisdzulfiqar/.gradle/caches/transforms-3/122d220b332e74ed2b233994700243a7/transformed/browser-1.8.0/res
-com.mycompany.swanlake.app-jetified-datastore-1.0.0-4 /Users/farisdzulfiqar/.gradle/caches/transforms-3/1699c63f9573134e674c6a6c952da8a3/transformed/jetified-datastore-1.0.0/res
-com.mycompany.swanlake.app-jetified-tracing-1.2.0-5 /Users/farisdzulfiqar/.gradle/caches/transforms-3/1d94d15ec00459b0cd91ee546963b31f/transformed/jetified-tracing-1.2.0/res
-com.mycompany.swanlake.app-jetified-profileinstaller-1.3.1-6 /Users/farisdzulfiqar/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/res
-com.mycompany.swanlake.app-jetified-lifecycle-viewmodel-savedstate-2.7.0-7 /Users/farisdzulfiqar/.gradle/caches/transforms-3/38443036310ac1ac0abc11bfed6c3bb6/transformed/jetified-lifecycle-viewmodel-savedstate-2.7.0/res
-com.mycompany.swanlake.app-jetified-lifecycle-livedata-core-ktx-2.7.0-8 /Users/farisdzulfiqar/.gradle/caches/transforms-3/415d7355b50e14c07c37d10ec73386cd/transformed/jetified-lifecycle-livedata-core-ktx-2.7.0/res
-com.mycompany.swanlake.app-jetified-core-ktx-1.13.1-9 /Users/farisdzulfiqar/.gradle/caches/transforms-3/415d76c52cad366e581fef5897ebd8d9/transformed/jetified-core-ktx-1.13.1/res
-com.mycompany.swanlake.app-core-runtime-2.2.0-10 /Users/farisdzulfiqar/.gradle/caches/transforms-3/42d7d1f4a8c3a86b590b4ec2a4ec7424/transformed/core-runtime-2.2.0/res
-com.mycompany.swanlake.app-jetified-startup-runtime-1.1.1-11 /Users/farisdzulfiqar/.gradle/caches/transforms-3/46cc651f6d63d2bfdfb2a5ef0963a8a5/transformed/jetified-startup-runtime-1.1.1/res
-com.mycompany.swanlake.app-lifecycle-runtime-2.7.0-12 /Users/farisdzulfiqar/.gradle/caches/transforms-3/4d8fb0e95169e7ab22556f7db2625b32/transformed/lifecycle-runtime-2.7.0/res
-com.mycompany.swanlake.app-lifecycle-viewmodel-2.7.0-13 /Users/farisdzulfiqar/.gradle/caches/transforms-3/5850a512e51849f8b0c7562717ef3f57/transformed/lifecycle-viewmodel-2.7.0/res
-com.mycompany.swanlake.app-core-1.13.1-14 /Users/farisdzulfiqar/.gradle/caches/transforms-3/6f9a65baaf12c9cf4e60f5516557d16b/transformed/core-1.13.1/res
-com.mycompany.swanlake.app-jetified-datastore-preferences-1.0.0-15 /Users/farisdzulfiqar/.gradle/caches/transforms-3/8358977a040b2893ab8895de101a88eb/transformed/jetified-datastore-preferences-1.0.0/res
-com.mycompany.swanlake.app-jetified-window-java-1.2.0-16 /Users/farisdzulfiqar/.gradle/caches/transforms-3/8847619c3d51f74604bc191b67b864ef/transformed/jetified-window-java-1.2.0/res
-com.mycompany.swanlake.app-fragment-1.7.1-17 /Users/farisdzulfiqar/.gradle/caches/transforms-3/8e432e5b9b8e9399b31b8f294dd12e31/transformed/fragment-1.7.1/res
-com.mycompany.swanlake.app-jetified-activity-1.8.1-18 /Users/farisdzulfiqar/.gradle/caches/transforms-3/b7d7f0cedb2a82f8fe37c039925beff8/transformed/jetified-activity-1.8.1/res
-com.mycompany.swanlake.app-jetified-window-1.2.0-19 /Users/farisdzulfiqar/.gradle/caches/transforms-3/ccc4a5834963eab3ddfc6002627a8dfd/transformed/jetified-window-1.2.0/res
-com.mycompany.swanlake.app-lifecycle-livedata-core-2.7.0-20 /Users/farisdzulfiqar/.gradle/caches/transforms-3/d06b4f0942054ac9aedca86ee14731d8/transformed/lifecycle-livedata-core-2.7.0/res
-com.mycompany.swanlake.app-jetified-annotation-experimental-1.4.0-21 /Users/farisdzulfiqar/.gradle/caches/transforms-3/e0b851902971f01ce1512c869b13ee9c/transformed/jetified-annotation-experimental-1.4.0/res
-com.mycompany.swanlake.app-lifecycle-livedata-2.7.0-22 /Users/farisdzulfiqar/.gradle/caches/transforms-3/e6b77f81fd42019aa6e0c89b074d648d/transformed/lifecycle-livedata-2.7.0/res
-com.mycompany.swanlake.app-debug-23 /Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/debug/res
-com.mycompany.swanlake.app-main-24 /Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/res
-com.mycompany.swanlake.app-pngs-25 /Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/build/app/generated/res/pngs/debug
-com.mycompany.swanlake.app-resValues-26 /Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/build/app/generated/res/resValues/debug
-com.mycompany.swanlake.app-packageDebugResources-27 /Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/build/app/intermediates/incremental/debug/packageDebugResources/merged.dir
-com.mycompany.swanlake.app-packageDebugResources-28 /Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/build/app/intermediates/incremental/debug/packageDebugResources/stripped.dir
-com.mycompany.swanlake.app-merged_res-29 /Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/build/app/intermediates/merged_res/debug
-com.mycompany.swanlake.app-packaged_res-30 /Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/build/path_provider_android/intermediates/packaged_res/debug
-com.mycompany.swanlake.app-packaged_res-31 /Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/build/shared_preferences_android/intermediates/packaged_res/debug
-com.mycompany.swanlake.app-packaged_res-32 /Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/build/sqflite/intermediates/packaged_res/debug
-com.mycompany.swanlake.app-packaged_res-33 /Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/build/url_launcher_android/intermediates/packaged_res/debug
+com.mycompany.swanlake.app-jetified-core-1.0.0-0 /home/noasha/.gradle/caches/transforms-3/009c5df562081d4b7b238cb604538cc1/transformed/jetified-core-1.0.0/res
+com.mycompany.swanlake.app-jetified-lifecycle-process-2.7.0-1 /home/noasha/.gradle/caches/transforms-3/025a519efc7e7e9feceab474293f9f99/transformed/jetified-lifecycle-process-2.7.0/res
+com.mycompany.swanlake.app-jetified-savedstate-1.2.1-2 /home/noasha/.gradle/caches/transforms-3/095d8d389c953609cbeb9a59131e5bb4/transformed/jetified-savedstate-1.2.1/res
+com.mycompany.swanlake.app-browser-1.8.0-3 /home/noasha/.gradle/caches/transforms-3/122d220b332e74ed2b233994700243a7/transformed/browser-1.8.0/res
+com.mycompany.swanlake.app-jetified-datastore-1.0.0-4 /home/noasha/.gradle/caches/transforms-3/1699c63f9573134e674c6a6c952da8a3/transformed/jetified-datastore-1.0.0/res
+com.mycompany.swanlake.app-jetified-tracing-1.2.0-5 /home/noasha/.gradle/caches/transforms-3/1d94d15ec00459b0cd91ee546963b31f/transformed/jetified-tracing-1.2.0/res
+com.mycompany.swanlake.app-jetified-profileinstaller-1.3.1-6 /home/noasha/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/res
+com.mycompany.swanlake.app-jetified-lifecycle-viewmodel-savedstate-2.7.0-7 /home/noasha/.gradle/caches/transforms-3/38443036310ac1ac0abc11bfed6c3bb6/transformed/jetified-lifecycle-viewmodel-savedstate-2.7.0/res
+com.mycompany.swanlake.app-jetified-lifecycle-livedata-core-ktx-2.7.0-8 /home/noasha/.gradle/caches/transforms-3/415d7355b50e14c07c37d10ec73386cd/transformed/jetified-lifecycle-livedata-core-ktx-2.7.0/res
+com.mycompany.swanlake.app-jetified-core-ktx-1.13.1-9 /home/noasha/.gradle/caches/transforms-3/415d76c52cad366e581fef5897ebd8d9/transformed/jetified-core-ktx-1.13.1/res
+com.mycompany.swanlake.app-core-runtime-2.2.0-10 /home/noasha/.gradle/caches/transforms-3/42d7d1f4a8c3a86b590b4ec2a4ec7424/transformed/core-runtime-2.2.0/res
+com.mycompany.swanlake.app-jetified-startup-runtime-1.1.1-11 /home/noasha/.gradle/caches/transforms-3/46cc651f6d63d2bfdfb2a5ef0963a8a5/transformed/jetified-startup-runtime-1.1.1/res
+com.mycompany.swanlake.app-lifecycle-runtime-2.7.0-12 /home/noasha/.gradle/caches/transforms-3/4d8fb0e95169e7ab22556f7db2625b32/transformed/lifecycle-runtime-2.7.0/res
+com.mycompany.swanlake.app-lifecycle-viewmodel-2.7.0-13 /home/noasha/.gradle/caches/transforms-3/5850a512e51849f8b0c7562717ef3f57/transformed/lifecycle-viewmodel-2.7.0/res
+com.mycompany.swanlake.app-core-1.13.1-14 /home/noasha/.gradle/caches/transforms-3/6f9a65baaf12c9cf4e60f5516557d16b/transformed/core-1.13.1/res
+com.mycompany.swanlake.app-jetified-datastore-preferences-1.0.0-15 /home/noasha/.gradle/caches/transforms-3/8358977a040b2893ab8895de101a88eb/transformed/jetified-datastore-preferences-1.0.0/res
+com.mycompany.swanlake.app-jetified-window-java-1.2.0-16 /home/noasha/.gradle/caches/transforms-3/8847619c3d51f74604bc191b67b864ef/transformed/jetified-window-java-1.2.0/res
+com.mycompany.swanlake.app-fragment-1.7.1-17 /home/noasha/.gradle/caches/transforms-3/8e432e5b9b8e9399b31b8f294dd12e31/transformed/fragment-1.7.1/res
+com.mycompany.swanlake.app-jetified-activity-1.8.1-18 /home/noasha/.gradle/caches/transforms-3/b7d7f0cedb2a82f8fe37c039925beff8/transformed/jetified-activity-1.8.1/res
+com.mycompany.swanlake.app-jetified-window-1.2.0-19 /home/noasha/.gradle/caches/transforms-3/ccc4a5834963eab3ddfc6002627a8dfd/transformed/jetified-window-1.2.0/res
+com.mycompany.swanlake.app-lifecycle-livedata-core-2.7.0-20 /home/noasha/.gradle/caches/transforms-3/d06b4f0942054ac9aedca86ee14731d8/transformed/lifecycle-livedata-core-2.7.0/res
+com.mycompany.swanlake.app-jetified-annotation-experimental-1.4.0-21 /home/noasha/.gradle/caches/transforms-3/e0b851902971f01ce1512c869b13ee9c/transformed/jetified-annotation-experimental-1.4.0/res
+com.mycompany.swanlake.app-lifecycle-livedata-2.7.0-22 /home/noasha/.gradle/caches/transforms-3/e6b77f81fd42019aa6e0c89b074d648d/transformed/lifecycle-livedata-2.7.0/res
+com.mycompany.swanlake.app-debug-23 /home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/debug/res
+com.mycompany.swanlake.app-main-24 /home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/res
+com.mycompany.swanlake.app-pngs-25 /home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/build/app/generated/res/pngs/debug
+com.mycompany.swanlake.app-resValues-26 /home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/build/app/generated/res/resValues/debug
+com.mycompany.swanlake.app-packageDebugResources-27 /home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/build/app/intermediates/incremental/debug/packageDebugResources/merged.dir
+com.mycompany.swanlake.app-packageDebugResources-28 /home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/build/app/intermediates/incremental/debug/packageDebugResources/stripped.dir
+com.mycompany.swanlake.app-merged_res-29 /home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/build/app/intermediates/merged_res/debug
+com.mycompany.swanlake.app-packaged_res-30 /home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/build/path_provider_android/intermediates/packaged_res/debug
+com.mycompany.swanlake.app-packaged_res-31 /home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/build/shared_preferences_android/intermediates/packaged_res/debug
+com.mycompany.swanlake.app-packaged_res-32 /home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/build/sqflite/intermediates/packaged_res/debug
+com.mycompany.swanlake.app-packaged_res-33 /home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/build/url_launcher_android/intermediates/packaged_res/debug

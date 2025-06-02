@@ -36,6 +36,8 @@ Route::get('/get/review/console', [ReviewController::class, 'getConsoleReviews']
 Route::get('/get/review/accessories', [ReviewController::class, 'getAccessoriesReviews'])->middleware('auth:sanctum');
 Route::get('/get/review/desktoplaptop', [ReviewController::class, 'getDesktopLaptopReviews'])->middleware('auth:sanctum');
 Route::get('/get/review/{id}', [ReviewController::class, 'getReviewById'])->middleware('auth:sanctum');
+Route::put('/update/review/{id}', [ReviewController::class, 'updateReview'])->middleware('auth:sanctum');
+Route::delete('/delete/review/{id}', [ReviewController::class, 'deleteReview'])->middleware('auth:sanctum');
 Route::get('/get/user', [UserController::class, 'getAllUsers'])->middleware('auth:sanctum');
 Route::get('/get/user/{id}', [UserController::class, 'getUserById'])->middleware('auth:sanctum');
 Route::put('/update/user/{id}', [UserController::class, 'updateUser'])->middleware('auth:sanctum');

@@ -39,7 +39,6 @@ class UserController extends Controller
 
     // Update user details
     public function updateUser(Request $request, $id) {
-    // Validasi input
     $validated = $request->validate([
         'email' => 'required|email|unique:users,email,' . $id . ',accountID',
         'name' => 'required|min:3|unique:users,name,' . $id . ',accountID',
@@ -72,9 +71,7 @@ class UserController extends Controller
     ]);
 }
 
-    // Delete user by ID
-    public function deleteUser($id)
-    {
+    public function deleteUser($id) {
         $user = User::find($id);
         
         if (!$user) {

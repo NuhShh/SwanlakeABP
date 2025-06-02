@@ -12,48 +12,48 @@
 12         to allow setting breakpoints, to provide hot reload, etc.
 13    -->
 14    <uses-permission android:name="android.permission.INTERNET" />
-14-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:4:5-66
-14-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:4:22-64
+14-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:4:5-66
+14-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:4:22-64
 15
 16    <permission
-16-->[androidx.core:core:1.13.1] /Users/farisdzulfiqar/.gradle/caches/transforms-3/6f9a65baaf12c9cf4e60f5516557d16b/transformed/core-1.13.1/AndroidManifest.xml:22:5-24:47
+16-->[androidx.core:core:1.13.1] /home/noasha/.gradle/caches/transforms-3/6f9a65baaf12c9cf4e60f5516557d16b/transformed/core-1.13.1/AndroidManifest.xml:22:5-24:47
 17        android:name="com.mycompany.swanlake.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-17-->[androidx.core:core:1.13.1] /Users/farisdzulfiqar/.gradle/caches/transforms-3/6f9a65baaf12c9cf4e60f5516557d16b/transformed/core-1.13.1/AndroidManifest.xml:23:9-81
+17-->[androidx.core:core:1.13.1] /home/noasha/.gradle/caches/transforms-3/6f9a65baaf12c9cf4e60f5516557d16b/transformed/core-1.13.1/AndroidManifest.xml:23:9-81
 18        android:protectionLevel="signature" />
-18-->[androidx.core:core:1.13.1] /Users/farisdzulfiqar/.gradle/caches/transforms-3/6f9a65baaf12c9cf4e60f5516557d16b/transformed/core-1.13.1/AndroidManifest.xml:24:9-44
+18-->[androidx.core:core:1.13.1] /home/noasha/.gradle/caches/transforms-3/6f9a65baaf12c9cf4e60f5516557d16b/transformed/core-1.13.1/AndroidManifest.xml:24:9-44
 19
 20    <uses-permission android:name="com.mycompany.swanlake.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
-20-->[androidx.core:core:1.13.1] /Users/farisdzulfiqar/.gradle/caches/transforms-3/6f9a65baaf12c9cf4e60f5516557d16b/transformed/core-1.13.1/AndroidManifest.xml:26:5-97
-20-->[androidx.core:core:1.13.1] /Users/farisdzulfiqar/.gradle/caches/transforms-3/6f9a65baaf12c9cf4e60f5516557d16b/transformed/core-1.13.1/AndroidManifest.xml:26:22-94
+20-->[androidx.core:core:1.13.1] /home/noasha/.gradle/caches/transforms-3/6f9a65baaf12c9cf4e60f5516557d16b/transformed/core-1.13.1/AndroidManifest.xml:26:5-97
+20-->[androidx.core:core:1.13.1] /home/noasha/.gradle/caches/transforms-3/6f9a65baaf12c9cf4e60f5516557d16b/transformed/core-1.13.1/AndroidManifest.xml:26:22-94
 21
 22    <application
-22-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:7:5-62:19
+22-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:7:5-62:19
 23        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-23-->[androidx.core:core:1.13.1] /Users/farisdzulfiqar/.gradle/caches/transforms-3/6f9a65baaf12c9cf4e60f5516557d16b/transformed/core-1.13.1/AndroidManifest.xml:28:18-86
+23-->[androidx.core:core:1.13.1] /home/noasha/.gradle/caches/transforms-3/6f9a65baaf12c9cf4e60f5516557d16b/transformed/core-1.13.1/AndroidManifest.xml:28:18-86
 24        android:debuggable="true"
 25        android:extractNativeLibs="false"
 26        android:icon="@mipmap/ic_launcher"
-26-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:10:9-43
+26-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:10:9-43
 27        android:label="SwanLake"
-27-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:8:9-33
+27-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:8:9-33
 28        android:requestLegacyExternalStorage="true" >
-28-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:11:9-52
+28-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:11:9-52
 29        <activity
-29-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:13:9-51:20
+29-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:13:9-51:20
 30            android:name="com.mycompany.swanlake.MainActivity"
-30-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:14:13-41
+30-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:14:13-41
 31            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-31-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:18:13-163
+31-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:18:13-163
 32            android:exported="true"
-32-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:15:13-36
+32-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:15:13-36
 33            android:hardwareAccelerated="true"
-33-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:19:13-47
+33-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:19:13-47
 34            android:launchMode="singleTop"
-34-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:16:13-43
+34-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:16:13-43
 35            android:theme="@style/LaunchTheme"
-35-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:17:13-47
+35-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:17:13-47
 36            android:windowSoftInputMode="adjustResize" >
-36-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:20:13-55
+36-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:20:13-55
 37
 38            <!--
 39                 Specifies an Android theme to apply to this Activity as soon as
@@ -62,11 +62,11 @@
 42                 to determine the Window background behind the Flutter UI.
 43            -->
 44            <meta-data
-44-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:25:13-28:17
+44-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:25:13-28:17
 45                android:name="io.flutter.embedding.android.NormalTheme"
-45-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:26:15-70
+45-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:26:15-70
 46                android:resource="@style/NormalTheme" />
-46-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:27:15-52
+46-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:27:15-52
 47            <!--
 48                 Displays an Android View that continues showing the launch screen
 49                 Drawable until Flutter paints its first frame, then this splash
@@ -75,50 +75,50 @@
 52                 Flutter's first frame.
 53            -->
 54            <meta-data
-54-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:34:13-37:17
+54-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:34:13-37:17
 55                android:name="io.flutter.embedding.android.SplashScreenDrawable"
-55-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:35:15-79
+55-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:35:15-79
 56                android:resource="@drawable/launch_background" />
-56-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:36:15-61
+56-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:36:15-61
 57
 58            <intent-filter>
-58-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:38:13-41:29
+58-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:38:13-41:29
 59                <action android:name="android.intent.action.MAIN" />
-59-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:39:17-68
-59-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:39:25-66
+59-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:39:17-68
+59-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:39:25-66
 60
 61                <category android:name="android.intent.category.LAUNCHER" />
-61-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:40:17-76
-61-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:40:27-74
+61-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:40:17-76
+61-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:40:27-74
 62            </intent-filter>
 63            <!-- Deep linking -->
 64            <meta-data
-64-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:43:13-90
+64-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:43:13-90
 65                android:name="flutter_deeplinking_enabled"
-65-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:43:24-66
+65-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:43:24-66
 66                android:value="true" />
-66-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:43:67-87
+66-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:43:67-87
 67
 68            <intent-filter android:autoVerify="true" >
-68-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:44:13-49:29
-68-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:44:28-53
+68-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:44:13-49:29
+68-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:44:28-53
 69                <action android:name="android.intent.action.VIEW" />
-69-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:45:17-69
-69-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:45:25-66
+69-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:45:17-69
+69-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:45:25-66
 70
 71                <category android:name="android.intent.category.DEFAULT" />
-71-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:46:17-76
-71-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:46:27-73
+71-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:46:17-76
+71-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:46:27-73
 72                <category android:name="android.intent.category.BROWSABLE" />
-72-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:47:17-78
-72-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:47:27-75
+72-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:47:17-78
+72-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:47:27-75
 73
 74                <data
-74-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:48:17-79
+74-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:48:17-79
 75                    android:host="swanlake.com"
-75-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:48:49-76
+75-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:48:49-76
 76                    android:scheme="swanlake" />
-76-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:48:23-48
+76-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:48:23-48
 77            </intent-filter>
 78        </activity>
 79
@@ -127,91 +127,91 @@
 82             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
 83        -->
 84        <meta-data
-84-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:55:9-57:33
+84-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:55:9-57:33
 85            android:name="flutterEmbedding"
-85-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:56:13-44
+85-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:56:13-44
 86            android:value="2" />
-86-->/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:57:13-30
+86-->/home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/android/app/src/main/AndroidManifest.xml:57:13-30
 87
 88        <activity
-88-->[:url_launcher_android] /Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:8:9-11:74
+88-->[:url_launcher_android] /home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:8:9-11:74
 89            android:name="io.flutter.plugins.urllauncher.WebViewActivity"
-89-->[:url_launcher_android] /Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:9:13-74
+89-->[:url_launcher_android] /home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:9:13-74
 90            android:exported="false"
-90-->[:url_launcher_android] /Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:10:13-37
+90-->[:url_launcher_android] /home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:10:13-37
 91            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
-91-->[:url_launcher_android] /Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/SwanlakeMobile/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-71
+91-->[:url_launcher_android] /home/noasha/Documents/ABP/Progress 2/SwanlakeMobile/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-71
 92
 93        <uses-library
-93-->[androidx.window:window:1.2.0] /Users/farisdzulfiqar/.gradle/caches/transforms-3/ccc4a5834963eab3ddfc6002627a8dfd/transformed/jetified-window-1.2.0/AndroidManifest.xml:23:9-25:40
+93-->[androidx.window:window:1.2.0] /home/noasha/.gradle/caches/transforms-3/ccc4a5834963eab3ddfc6002627a8dfd/transformed/jetified-window-1.2.0/AndroidManifest.xml:23:9-25:40
 94            android:name="androidx.window.extensions"
-94-->[androidx.window:window:1.2.0] /Users/farisdzulfiqar/.gradle/caches/transforms-3/ccc4a5834963eab3ddfc6002627a8dfd/transformed/jetified-window-1.2.0/AndroidManifest.xml:24:13-54
+94-->[androidx.window:window:1.2.0] /home/noasha/.gradle/caches/transforms-3/ccc4a5834963eab3ddfc6002627a8dfd/transformed/jetified-window-1.2.0/AndroidManifest.xml:24:13-54
 95            android:required="false" />
-95-->[androidx.window:window:1.2.0] /Users/farisdzulfiqar/.gradle/caches/transforms-3/ccc4a5834963eab3ddfc6002627a8dfd/transformed/jetified-window-1.2.0/AndroidManifest.xml:25:13-37
+95-->[androidx.window:window:1.2.0] /home/noasha/.gradle/caches/transforms-3/ccc4a5834963eab3ddfc6002627a8dfd/transformed/jetified-window-1.2.0/AndroidManifest.xml:25:13-37
 96        <uses-library
-96-->[androidx.window:window:1.2.0] /Users/farisdzulfiqar/.gradle/caches/transforms-3/ccc4a5834963eab3ddfc6002627a8dfd/transformed/jetified-window-1.2.0/AndroidManifest.xml:26:9-28:40
+96-->[androidx.window:window:1.2.0] /home/noasha/.gradle/caches/transforms-3/ccc4a5834963eab3ddfc6002627a8dfd/transformed/jetified-window-1.2.0/AndroidManifest.xml:26:9-28:40
 97            android:name="androidx.window.sidecar"
-97-->[androidx.window:window:1.2.0] /Users/farisdzulfiqar/.gradle/caches/transforms-3/ccc4a5834963eab3ddfc6002627a8dfd/transformed/jetified-window-1.2.0/AndroidManifest.xml:27:13-51
+97-->[androidx.window:window:1.2.0] /home/noasha/.gradle/caches/transforms-3/ccc4a5834963eab3ddfc6002627a8dfd/transformed/jetified-window-1.2.0/AndroidManifest.xml:27:13-51
 98            android:required="false" />
-98-->[androidx.window:window:1.2.0] /Users/farisdzulfiqar/.gradle/caches/transforms-3/ccc4a5834963eab3ddfc6002627a8dfd/transformed/jetified-window-1.2.0/AndroidManifest.xml:28:13-37
+98-->[androidx.window:window:1.2.0] /home/noasha/.gradle/caches/transforms-3/ccc4a5834963eab3ddfc6002627a8dfd/transformed/jetified-window-1.2.0/AndroidManifest.xml:28:13-37
 99
 100        <provider
-100-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/farisdzulfiqar/.gradle/caches/transforms-3/025a519efc7e7e9feceab474293f9f99/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:24:9-32:20
+100-->[androidx.lifecycle:lifecycle-process:2.7.0] /home/noasha/.gradle/caches/transforms-3/025a519efc7e7e9feceab474293f9f99/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:24:9-32:20
 101            android:name="androidx.startup.InitializationProvider"
-101-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/farisdzulfiqar/.gradle/caches/transforms-3/025a519efc7e7e9feceab474293f9f99/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:25:13-67
+101-->[androidx.lifecycle:lifecycle-process:2.7.0] /home/noasha/.gradle/caches/transforms-3/025a519efc7e7e9feceab474293f9f99/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:25:13-67
 102            android:authorities="com.mycompany.swanlake.androidx-startup"
-102-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/farisdzulfiqar/.gradle/caches/transforms-3/025a519efc7e7e9feceab474293f9f99/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:26:13-68
+102-->[androidx.lifecycle:lifecycle-process:2.7.0] /home/noasha/.gradle/caches/transforms-3/025a519efc7e7e9feceab474293f9f99/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:26:13-68
 103            android:exported="false" >
-103-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/farisdzulfiqar/.gradle/caches/transforms-3/025a519efc7e7e9feceab474293f9f99/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:27:13-37
+103-->[androidx.lifecycle:lifecycle-process:2.7.0] /home/noasha/.gradle/caches/transforms-3/025a519efc7e7e9feceab474293f9f99/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:27:13-37
 104            <meta-data
-104-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/farisdzulfiqar/.gradle/caches/transforms-3/025a519efc7e7e9feceab474293f9f99/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:29:13-31:52
+104-->[androidx.lifecycle:lifecycle-process:2.7.0] /home/noasha/.gradle/caches/transforms-3/025a519efc7e7e9feceab474293f9f99/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:29:13-31:52
 105                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-105-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/farisdzulfiqar/.gradle/caches/transforms-3/025a519efc7e7e9feceab474293f9f99/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:30:17-78
+105-->[androidx.lifecycle:lifecycle-process:2.7.0] /home/noasha/.gradle/caches/transforms-3/025a519efc7e7e9feceab474293f9f99/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:30:17-78
 106                android:value="androidx.startup" />
-106-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/farisdzulfiqar/.gradle/caches/transforms-3/025a519efc7e7e9feceab474293f9f99/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:31:17-49
+106-->[androidx.lifecycle:lifecycle-process:2.7.0] /home/noasha/.gradle/caches/transforms-3/025a519efc7e7e9feceab474293f9f99/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:31:17-49
 107            <meta-data
-107-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/farisdzulfiqar/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:29:13-31:52
+107-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/noasha/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:29:13-31:52
 108                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-108-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/farisdzulfiqar/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:30:17-85
+108-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/noasha/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:30:17-85
 109                android:value="androidx.startup" />
-109-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/farisdzulfiqar/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:31:17-49
+109-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/noasha/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:31:17-49
 110        </provider>
 111
 112        <receiver
-112-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/farisdzulfiqar/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:34:9-52:20
+112-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/noasha/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:34:9-52:20
 113            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-113-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/farisdzulfiqar/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:35:13-76
+113-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/noasha/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:35:13-76
 114            android:directBootAware="false"
-114-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/farisdzulfiqar/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:36:13-44
+114-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/noasha/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:36:13-44
 115            android:enabled="true"
-115-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/farisdzulfiqar/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:37:13-35
+115-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/noasha/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:37:13-35
 116            android:exported="true"
-116-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/farisdzulfiqar/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:38:13-36
+116-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/noasha/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:38:13-36
 117            android:permission="android.permission.DUMP" >
-117-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/farisdzulfiqar/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:39:13-57
+117-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/noasha/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:39:13-57
 118            <intent-filter>
-118-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/farisdzulfiqar/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:40:13-42:29
+118-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/noasha/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:40:13-42:29
 119                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-119-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/farisdzulfiqar/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:41:17-91
-119-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/farisdzulfiqar/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:41:25-88
+119-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/noasha/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:41:17-91
+119-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/noasha/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:41:25-88
 120            </intent-filter>
 121            <intent-filter>
-121-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/farisdzulfiqar/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:43:13-45:29
+121-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/noasha/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:43:13-45:29
 122                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-122-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/farisdzulfiqar/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:44:17-85
-122-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/farisdzulfiqar/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:44:25-82
+122-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/noasha/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:44:17-85
+122-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/noasha/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:44:25-82
 123            </intent-filter>
 124            <intent-filter>
-124-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/farisdzulfiqar/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:46:13-48:29
+124-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/noasha/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:46:13-48:29
 125                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-125-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/farisdzulfiqar/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:47:17-88
-125-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/farisdzulfiqar/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:47:25-85
+125-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/noasha/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:47:17-88
+125-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/noasha/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:47:25-85
 126            </intent-filter>
 127            <intent-filter>
-127-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/farisdzulfiqar/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:49:13-51:29
+127-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/noasha/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:49:13-51:29
 128                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-128-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/farisdzulfiqar/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:50:17-95
-128-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/farisdzulfiqar/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:50:25-92
+128-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/noasha/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:50:17-95
+128-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/noasha/.gradle/caches/transforms-3/26f310b97a62e76c40a5d9d6f00c87c1/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:50:25-92
 129            </intent-filter>
 130        </receiver>
 131    </application>

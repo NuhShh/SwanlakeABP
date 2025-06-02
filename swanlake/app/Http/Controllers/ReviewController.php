@@ -111,4 +111,90 @@ class ReviewController extends Controller
             'reviews' => $reviews
         ]);
     }
+
+    public function updateReview(Request $request, $id){
+        $validated = $request->validate([
+            'productName' => 'required|string|unique:reviews,productName,' . $id . ',reviewID',
+            'productType' => 'required|string',
+            'reviewTitle' => 'required|string',
+            'cardDesc' => 'nullable|string',
+            'processor' => 'nullable|string',
+            'processorDesc' => 'nullable|string',
+            'ram' => 'nullable|string',
+            'ramDesc' => 'nullable|string',
+            'storage' => 'nullable|string',
+            'storageDesc' => 'nullable|string',
+            'display' => 'nullable|string',
+            'displayDesc' => 'nullable|string',
+            'battery' => 'nullable|string',
+            'batteryDesc' => 'nullable|string',
+            'camera' => 'nullable|string',
+            'cameraDesc' => 'nullable|string',
+            'price' => 'nullable|integer',
+            'reviewText' => 'nullable|string',
+            'imageName' => 'nullable|string',
+            'rating' => 'nullable|numeric',
+            'keyFeatures' => 'nullable|string',
+            'performance' => 'nullable|string',
+            'date' => 'nullable|date',
+            'reviewAccountID' => 'nullable|exists:users,accountID',
+        ]);
+
+        $review = Review::find($id); 
+        if (!$review) {
+            return response()->json([
+                'message' => 'Review not found',
+            ], 404);
+        }
+
+        $review->productName = $validated['productName'];
+        $review->productType = $validated['productType'];
+        $review->reviewTitle = $validated['reviewTitle'];
+        $review->cardDesc = $validated['cardDesc'] ?? null;
+        $review->processor = $validated['processor'] ?? null;
+        $review->processorDesc = $validated['processorDesc'] ?? null;
+        $review->ram = $validated['ram'] ?? null;
+        $review->ramDesc = $validated['ramDesc'] ?? null;
+        $review->storage = $validated['storage'] ?? null;
+        $review->storageDesc = $validated['storageDesc'] ?? null;
+        $review->display = $validated['display'] ?? null;
+        $review->displayDesc = $validated['displayDesc'] ?? null;
+        $review->battery = $validated['battery'] ?? null;
+        $review->batteryDesc = $validated['batteryDesc'] ?? null;
+        $review->camera = $validated['camera'] ?? null;
+        $review->cameraDesc = $validated['cameraDesc'] ?? null;
+        $review->price = $validated['price'] ?? null;
+        $review->reviewText = $validated['reviewText'] ?? null;
+        $review->imageName = $validated['imageName'] ?? null;
+        $review->rating = $validated['rating'] ?? null;
+        $review->keyFeatures = $validated['keyFeatures'] ?? null;
+        $review->performance = $validated['performance'] ?? null;
+        $review->date = $validated['date'] ?? null;
+        $review->reviewAccountID = $validated['reviewAccountID'] ?? null;
+
+        $review->save();
+
+        return response()->json([
+            'message' => 'Review updated successfully',
+            'review' => $review,
+        ]);
+    }
+
+    // Delete Review
+public function deleteReview($id) {
+        $review = Review::find($id);
+        
+        if (!$review) {
+            return response()->json([
+                'message' => 'Review not found',
+            ], 404);
+        }
+
+        $review->delete();
+
+        return response()->json([
+            'message' => 'Review deleted successfully',
+        ], 200);
+    }
+
 }
