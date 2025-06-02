@@ -1,52 +1,47 @@
-import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
-import 'add_user_page_widget.dart' show AddUserPageWidget;
 import 'package:flutter/material.dart';
 
-class AddUserPageModel extends FlutterFlowModel<AddUserPageWidget> {
-  ///  State fields for stateful widgets in this page.
-
+class AddUserPageModel extends ChangeNotifier {
   final formKey = GlobalKey<FormState>();
-  // State field(s) for fullName widget.
+
+  // Username
   FocusNode? fullNameFocusNode;
   TextEditingController? fullNameTextController;
-  String? Function(BuildContext, String?)? fullNameTextControllerValidator;
-  String? _fullNameTextControllerValidator(BuildContext context, String? val) {
+  String? Function(BuildContext, String?)? fullNameTextControllerValidator =
+      (context, val) {
     if (val == null || val.isEmpty) {
-      return 'Please enter the patients full name.';
+      return 'Please enter the user\'s full name.';
     }
-
     return null;
-  }
+  };
 
-  // State field(s) for ChoiceChips widget.
-  FormFieldController<List<String>>? choiceChipsValueController;
-  String? get choiceChipsValue =>
-      choiceChipsValueController?.value?.firstOrNull;
-  set choiceChipsValue(String? val) =>
-      choiceChipsValueController?.value = val != null ? [val] : [];
-  // State field(s) for email widget.
+  // Email
   FocusNode? emailFocusNode;
   TextEditingController? emailTextController;
-  String? Function(BuildContext, String?)? emailTextControllerValidator;
-  String? _emailTextControllerValidator(BuildContext context, String? val) {
+  String? Function(BuildContext, String?)? emailTextControllerValidator =
+      (context, val) {
     if (val == null || val.isEmpty) {
-      return 'Please enter an age for the patient.';
+      return 'Please enter an email.';
     }
-
+    if (!val.contains('@')) {
+      return 'Enter a valid email address.';
+    }
     return null;
-  }
+  };
 
-  // State field(s) for phoneNumber widget.
-  FocusNode? phoneNumberFocusNode;
-  TextEditingController? phoneNumberTextController;
-  String? Function(BuildContext, String?)? phoneNumberTextControllerValidator;
-
-  @override
-  void initState(BuildContext context) {
-    fullNameTextControllerValidator = _fullNameTextControllerValidator;
-    emailTextControllerValidator = _emailTextControllerValidator;
-  }
+  // Password
+  FocusNode? passwordFocusNode;
+  TextEditingController? passwordTextController;
+  String? Function(BuildContext, String?)? passwordTextControllerValidator =
+      (context, val) {
+    if (val == null || val.isEmpty) {
+      return 'Please enter a password.';
+    }
+    if (val.length < 6) {
+      return 'Password must be at least 6 characters.';
+    }
+    return null;
+  };
 
   @override
   void dispose() {
@@ -56,7 +51,9 @@ class AddUserPageModel extends FlutterFlowModel<AddUserPageWidget> {
     emailFocusNode?.dispose();
     emailTextController?.dispose();
 
-    phoneNumberFocusNode?.dispose();
-    phoneNumberTextController?.dispose();
+    passwordFocusNode?.dispose();
+    passwordTextController?.dispose();
+
+    super.dispose();
   }
 }

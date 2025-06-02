@@ -146,6 +146,45 @@ class _EditUserPageWidgetState extends State<EditUserPageWidget> {
     }
   }
 
+  Future<void> deleteUser() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('auth_token');
+    if (token == null) {
+      throw Exception('Token not found');
+    }
+
+    // Check if the user is trying to delete their own account
+    if (accountID == widget.accountID) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("You cannot delete your own account."),
+        backgroundColor: Colors.red,
+      ));
+      return;
+    }
+
+    try {
+      final response = await http.delete(
+        Uri.parse('http://10.0.2.2:8000/api/delete/user/$accountID'),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Accept': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text("User deleted successfully")));
+        Navigator.pop(context); // Go back to the previous screen
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text("Failed to delete user: ${response.body}")));
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("Error: $e")));
+    }
+  }
+
   @override
   void dispose() {
     _model.dispose();
@@ -278,6 +317,54 @@ class _EditUserPageWidgetState extends State<EditUserPageWidget> {
                                   width: 170.0,
                                   height: 40.0,
                                   color: FlutterFlowTheme.of(context).primary,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .override(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16,
+                                  ),
+                                  elevation: 0,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                              SizedBox(height: 20),
+                              FFButtonWidget(
+                                onPressed: () async {
+                                  // Show confirmation dialog
+                                  bool? shouldDelete = await showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text('Confirm Deletion'),
+                                        content: Text(
+                                            'Are you sure you want to delete this user?'),
+                                        actions: [
+                                          TextButton(
+                                            child: Text('Cancel'),
+                                            onPressed: () {
+                                              Navigator.of(context).pop(false);
+                                            },
+                                          ),
+                                          TextButton(
+                                            child: Text('Delete'),
+                                            onPressed: () {
+                                              Navigator.of(context).pop(true);
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+
+                                  if (shouldDelete == true) {
+                                    await deleteUser();
+                                  }
+                                },
+                                text: 'Delete This User',
+                                options: FFButtonOptions(
+                                  width: 170.0,
+                                  height: 40.0,
+                                  color: Colors.red,
                                   textStyle: FlutterFlowTheme.of(context)
                                       .titleSmall
                                       .override(

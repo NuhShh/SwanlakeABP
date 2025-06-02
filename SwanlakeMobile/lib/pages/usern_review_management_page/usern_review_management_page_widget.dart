@@ -1,8 +1,10 @@
 import 'package:swanlake/flutter_flow/flutter_flow_icon_button.dart';
 
 import '../../flutter_flow/form_field_controller.dart';
+import '../add_user_page/add_user_page_widget.dart';
 import '../edit_form/edit_form_widget.dart';
 import '../edit_user_page/edit_user_page_widget.dart';
+import '../post_form_page/post_form_page_widget.dart';
 import '../review_page/review_page_widget.dart';
 import '/flutter_flow/flutter_flow_choice_chips.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -216,21 +218,42 @@ class _UsernReviewManagementPageWidgetState
                     Positioned(
                       top: 16,
                       right: 16,
-                      child: FlutterFlowIconButton(
-                        borderColor: FlutterFlowTheme.of(context).alternate,
-                        borderRadius: 12.0,
-                        borderWidth: 1.0,
-                        buttonSize: 40.0,
-                        fillColor: FlutterFlowTheme.of(context).secondaryBackground,
-                        icon: Icon(
-                          Icons.refresh,
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          size: 24.0,
-                        ),
-                        onPressed: () async {
-                          await model.loadData();
-                          safeSetState(() {});
-                        },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          FlutterFlowIconButton(
+                            borderColor: FlutterFlowTheme.of(context).alternate,
+                            borderRadius: 12.0,
+                            borderWidth: 1.0,
+                            buttonSize: 40.0,
+                            fillColor: FlutterFlowTheme.of(context).secondaryBackground,
+                            icon: Icon(
+                              Icons.refresh,
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              size: 24.0,
+                            ),
+                            onPressed: () async {
+                              await model.loadData();
+                              safeSetState(() {});
+                            },
+                          ),
+                          SizedBox(width: 8),
+                          FlutterFlowIconButton(
+                            borderColor: FlutterFlowTheme.of(context).alternate,
+                            borderRadius: 12.0,
+                            borderWidth: 1.0,
+                            buttonSize: 40.0,
+                            fillColor: FlutterFlowTheme.of(context).secondaryBackground,
+                            icon: Icon(
+                              Icons.close_rounded,
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              size: 24.0,
+                            ),
+                            onPressed: () {
+                              context.pop(); // Navigate back to the previous page
+                            },
+                          ),
+                        ],
                       ),
                     ),
                     Positioned(
@@ -241,7 +264,7 @@ class _UsernReviewManagementPageWidgetState
                         child: model.choiceChipsValue == 'Users'
                             ? FFButtonWidget(
                           onPressed: () {
-                            Navigator.pushNamed(context, 'AddUserPage');
+                            context.pushNamed(AddUserPageWidget.routeName);
                           },
                           text: 'Add User',
                           options: FFButtonOptions(
@@ -261,8 +284,7 @@ class _UsernReviewManagementPageWidgetState
                             : model.choiceChipsValue == 'Reviews'
                             ? FFButtonWidget(
                           onPressed: () {
-                            Navigator.pushNamed(
-                                context, 'PostFormPage');
+                            context.pushNamed(PostFormPageWidget.routeName);
                           },
                           text: 'Add Review',
                           options: FFButtonOptions(
