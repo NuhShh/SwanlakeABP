@@ -23,32 +23,50 @@ interface Review {
 export default function HomePage() {
   const [latestReviews, setLatestReviews] = useState<Review[]>([]);
   const [topRatedReviews, setTopRatedReviews] = useState<Review[]>([]);
+  const [error, setError] = useState<string>("");
+
+  // Mengambil token dari localStorage
   const token = localStorage.getItem('token');
+  console.log("Token from localStorage:", token);  // Memastikan token ada di localStorage
+
+  // Menambahkan pengecekan token kosong
+  if (!token) {
+    setError("Token tidak ditemukan. Silakan login.");
+  }
 
   useEffect(() => {
+    if (!token) return; // Menghentikan eksekusi jika token tidak ada
+
+    console.log("Fetching reviews...");
     const loadReviews = async () => {
       try {
-        const result = await fetch("http://127.0.0.1:8000/api/get/review",  {
+        // Memastikan token terkirim dengan benar di header
+        const result = await fetch("http://127.0.0.1:8000/api/get/review", {
           headers: {
-            'Authorization': `Bearer ${token}`
-          }
+            'Authorization': `Bearer ${token}`,
+          },
         });
+
         const allReviews = await result.json();
+        console.log("API Response:", allReviews); // Memastikan respons diterima dengan benar
 
-        // Latest Reviews
-        const latest = allReviews.slice(0, 3);
+        // Cek apakah 'reviews' ada dan merupakan array
+        if (Array.isArray(allReviews.reviews)) {
+          const latest = allReviews.reviews.slice(0, 3);
 
-        // Top Rated Reviews: Tambahkan badge "Top Rated"
-        const topRated = allReviews
-          .filter((review: any) => review.rating >= 4.5)
-          .map((review: any) => ({
-            ...review,
-            badge: "Top Rated",
-          }))
-          .slice(0, 3);
+          const topRated = allReviews.reviews
+            .filter((review: any) => review.rating >= 4.5)
+            .map((review: any) => ({
+              ...review,
+              badge: "Top Rated",
+            }))
+            .slice(0, 3);
 
-        setLatestReviews(latest);
-        setTopRatedReviews(topRated);
+          setLatestReviews(latest);
+          setTopRatedReviews(topRated);
+        } else {
+          throw new Error("Expected reviews to be an array");
+        }
 
         // Animasi untuk kartu
         gsap.fromTo(
@@ -64,17 +82,25 @@ export default function HomePage() {
         );
       } catch (error) {
         console.error("Error fetching reviews:", error);
+        setError("An error occurred while fetching reviews");
       }
     };
 
     loadReviews();
-  }, []);
+  }, [token]); // Menambahkan dependensi token di useEffect
 
   return (
     <div className="min-h-screen transition-colors duration-200 dark:bg-gray-900">
       <main>
         {/* Carousel */}
         <Carousel />
+
+        {/* Error Handling */}
+        {error && (
+          <div className="bg-red-500 text-white text-center p-4">
+            {error}
+          </div>
+        )}
 
         {/* Latest Reviews Section */}
         <section className="py-12 dark:bg-black/70">

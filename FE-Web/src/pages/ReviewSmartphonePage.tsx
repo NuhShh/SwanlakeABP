@@ -1,85 +1,116 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { Flame, TrendingUp } from "lucide-react"; // Anda bisa menyesuaikan ikon sesuai kebutuhan
+import ReviewCard from "../components/ReviewCard"; // pastikan komponen ini ada di folder components
 
 interface Review {
   reviewID: string;
   productName: string;
-  productType: string;
   reviewTitle: string;
   cardDesc: string;
-  processor: string;
-  processorDesc: string;
-  ram: string;
-  ramDesc: string;
-  storage: string;
-  storageDesc: string;
-  display: string;
-  displayDesc: string;
-  battery: string;
-  batteryDesc: string;
-  camera: string;
-  cameraDesc: string;
+  productType: string;
   price: number;
-  reviewText: string;
   imageName: string;
   rating: number;
-  keyFeatures: string;
-  performance: string;
+  reviewText: string;
 }
 
-export default function UserList() {
-  const [reviews, setReviews] = useState<Review[]>([]);
+export default function ReviewSmartphonePage() {
+  const { reviewID } = useParams<{ reviewID: string }>(); // Ambil reviewID dari URL params
+  const [review, setReview] = useState<Review | null>(null);
+  const [error, setError] = useState<string>("");
 
   useEffect(() => {
-    loadAccounts();
-  }, []);
+    loadReview();
+  }, [reviewID]);
 
-  const loadAccounts = async () => {
-    const result = await axios.get("http://localhost:8080/get/review");
-    setReviews(result.data);
+  const loadReview = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/get/review/${reviewID}`
+      );
+      setReview(response.data);
+    } catch (error) {
+      console.error("Error fetching review:", error);
+      setError("An error occurred while fetching the review.");
+    }
   };
 
-  return (
-    <div className="container mx-auto p-6">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {reviews.map((review, index) => (
-          <div
-            key={index}
-            className="border border-gray-300 rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105"
-          >
-            {/* Image */}
-            <div className="relative">
-              <img
-                src={`/images/${review.imageName}`}
-                alt={review.productName}
-                className="w-full h-48 object-cover"
-              />
-            </div>
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-100 text-center py-10">
+        <h2 className="text-xl text-red-600">{error}</h2>
+      </div>
+    );
+  }
 
-            {/* Card Content */}
-            <div className="p-6">
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">
+  if (!review) {
+    return (
+      <div className="min-h-screen bg-gray-100 text-center py-10">
+        <h2 className="text-xl text-gray-600">Loading...</h2>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-100 py-10">
+      <div className="max-w-7xl mx-auto px-4">
+        {/* Header Section */}
+        <div className="mb-6 text-center">
+          <Flame className="w-6 h-6 text-orange-500 inline-block mb-2" />
+          <h2 className="text-3xl font-semibold text-gray-800">
+            {review.productName} Review
+          </h2>
+          <p className="text-sm text-gray-600">{review.productType}</p>
+        </div>
+
+        {/* Review Section */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="col-span-1">
+            <img
+              src={`/images/${review.imageName}`}
+              alt={review.productName}
+              className="w-full h-64 object-cover rounded-lg"
+            />
+          </div>
+
+          <div className="col-span-1">
+            <div className="p-6 bg-white rounded-lg shadow-lg">
+              <h3 className="text-xl font-semibold text-gray-800 mb-4">
                 {review.reviewTitle}
               </h3>
               <p className="text-sm text-gray-600 mb-4">
-                <strong>Nama Produk:</strong> {review.productName}
+                <strong>Price: </strong>${review.price}
               </p>
               <p className="text-sm text-gray-600 mb-4">
-                <strong>Deskripsi:</strong> {review.cardDesc}
+                <strong>Description: </strong>{review.cardDesc}
               </p>
               <p className="text-sm text-gray-500 mb-4">
-                <strong>Review ID:</strong> {review.reviewID}
+                <strong>Review:</strong> {review.reviewText}
               </p>
-              <Link
-                to={`/product-review/${review.reviewID}`}
-                className="inline-block px-4 py-2 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition duration-300"
-              >
-                Read More...
-              </Link>
+
+              {/* Add Rating / Other Info */}
+              <div className="flex items-center">
+                <span className="text-sm font-semibold text-gray-800">
+                  Rating: {review.rating}
+                </span>
+                <TrendingUp className="w-5 h-5 text-blue-500 ml-2" />
+              </div>
             </div>
           </div>
-        ))}
+        </div>
+
+        {/* Additional Reviews Section */}
+        <div className="mt-12">
+          <h3 className="text-2xl font-semibold text-gray-800 mb-4">
+            Related Smartphone Reviews
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Add mapping to display related reviews */}
+            {/* You can use similar logic for fetching and mapping related reviews */}
+          </div>
+        </div>
       </div>
     </div>
   );

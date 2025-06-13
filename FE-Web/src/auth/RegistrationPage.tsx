@@ -1,8 +1,8 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
-import UserService from "../service/UserService";
-import { useNavigate } from "react-router-dom";
+import UserService from "../service/UserService"; // Import service untuk registrasi
+import { useNavigate } from "react-router-dom"; // Import useNavigate untuk berpindah halaman
 
-// Define the shape of the form data
+// Definisikan tipe data untuk form input
 interface FormData {
   name: string;
   email: string;
@@ -11,47 +11,48 @@ interface FormData {
 }
 
 function RegistrationPage() {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Hook untuk navigasi
 
-  // Initialize formData state with the type FormData
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
     password: "",
-    role: "USER", // Set default role as "USER"
+    role: "USER", // Set default role
   });
 
-  // Handle input changes with proper typing for event
+  // Fungsi untuk meng-handle perubahan input form
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // Handle form submission with proper typing for event
+  // Fungsi untuk menangani submit form
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e.preventDefault(); // Mencegah form default action
+
     try {
-      // Call the register method from UserService
+      // Mengirim data registrasi melalui service
       const response = await UserService.register(formData);
 
+      // Jika registrasi berhasil
       if (response.message === "User Saved Successfully") {
         setFormData({
           name: "",
           email: "",
           password: "",
-          role: "USER",
+          role: "USER", // Reset form
         });
         alert("User registered successfully");
-        navigate("/");
+        navigate("/login"); // Navigasi ke halaman login setelah registrasi berhasil
       } else {
-        // Show backend validation message
-        alert(response.message);
+        // Jika ada pesan error dari backend
+        alert(response.message || "Registration failed");
       }
     } catch (error: any) {
+      // Jika terjadi error saat request API
       console.error("Error registering user:", error);
       alert(
-        error.response?.data?.message ||
-          "An error occurred while registering user"
+        error.response?.data?.message || "An error occurred while registering user"
       );
     }
   };
@@ -105,8 +106,6 @@ function RegistrationPage() {
               className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          {/* Hidden role field */}
-          <input type="hidden" name="role" value="USER" />
           <button
             type="submit"
             className="w-full py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -114,9 +113,13 @@ function RegistrationPage() {
             Register
           </button>
         </form>
+
         <p className="mt-4 text-center text-gray-600">
           Already have an account?{" "}
-          <a href="/" className="text-blue-500 hover:underline">
+          <a
+            href="/login" // Menggunakan <a> bisa, tapi lebih baik pakai Link jika menggunakan react-router
+            className="text-blue-500 hover:underline"
+          >
             Login here
           </a>
         </p>

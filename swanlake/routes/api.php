@@ -46,3 +46,9 @@ Route::delete('/delete/user/{id}', [UserController::class, 'deleteUser'])->middl
 
 Route::middleware('auth:sanctum')->get('/get/comments/{review_id}', [CommentController::class, 'getComments']);
 Route::middleware('auth:sanctum')->post('/add/comment', [CommentController::class, 'addComment']);
+
+Route::middleware('auth:sanctum')->get('/test-token', function (Request $request) {
+    return response()->json([
+        'user' => $request->user(),  // Mengembalikan data pengguna yang terautentikasi
+    ]);
+});

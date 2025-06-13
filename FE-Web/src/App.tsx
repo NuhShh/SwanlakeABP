@@ -31,6 +31,7 @@ import AddReview from "./pages/AddReview";
 export default function App() {
   // Mengecek apakah user sudah terautentikasi
   const isAuthenticated = UserService.isAuthenticated();
+  const userRole = localStorage.getItem('role'); // Ambil role user dari localStorage
 
   return (
     <ThemeProvider>
@@ -45,7 +46,6 @@ export default function App() {
                 isAuthenticated ? <Navigate to="/homepage" /> : <LoginPage />
               }
             />
-
             <Route
               path="/register"
               element={
@@ -61,73 +61,73 @@ export default function App() {
             <Route
               path="/category/:category"
               element={
-                <ProtectedRoute roles={["USER", "ADMIN"]}>
+                // <ProtectedRoute roles={["USER", "ADMIN"]}>
                   <CategoryPage />
-                </ProtectedRoute>
+                // </ProtectedRoute>
               }
             />
             <Route
               path="/review/:slug"
               element={
-                <ProtectedRoute roles={["USER", "ADMIN"]}>
+                // <ProtectedRoute roles={["USER", "ADMIN"]}>
                   <ReviewPage />
-                </ProtectedRoute>
+                // </ProtectedRoute>
               }
             />
             <Route
               path="/top-rated/"
               element={
-                <ProtectedRoute roles={["USER", "ADMIN"]}>
+                // <ProtectedRoute roles={["USER", "ADMIN"]}>
                   <TopRatedReviewsPage />
-                </ProtectedRoute>
+                // </ProtectedRoute>
               }
             />
             <Route
               path="/newest-review/"
               element={
-                <ProtectedRoute roles={["USER", "ADMIN"]}>
+                // <ProtectedRoute roles={["USER", "ADMIN"]}>
                   <TrendingReviewsPage />
-                </ProtectedRoute>
+                // </ProtectedRoute>
               }
             />
             <Route
               path="/userlist/"
               element={
-                <ProtectedRoute roles={["USER", "ADMIN"]}>
+                // <ProtectedRoute roles={["USER", "ADMIN"]}>
                   <UserList />
-                </ProtectedRoute>
+                // </ProtectedRoute>
               }
             />
             <Route
               path="/reviewlist/"
               element={
-                <ProtectedRoute roles={["USER", "ADMIN"]}>
+                // <ProtectedRoute roles={["USER", "ADMIN"]}>
                   <ReviewList />
-                </ProtectedRoute>
+                // </ProtectedRoute>
               }
             />
             <Route
               path="/homepage/"
               element={
-                <ProtectedRoute roles={["USER", "ADMIN"]}>
+                // <ProtectedRoute roles={["USER", "ADMIN"]}>
                   <HomePage />
-                </ProtectedRoute>
+                // </ProtectedRoute>
               }
             />
             <Route
               path="/smartphone/"
               element={
-                <ProtectedRoute roles={["USER", "ADMIN"]}>
+                // <ProtectedRoute roles={["USER", "ADMIN"]}>
                   <ReviewSmartphonePage />
-                </ProtectedRoute>
+                // </ProtectedRoute>
               }
             />
             <Route
               path="/product-review/:reviewID"
               element={
-                <ProtectedRoute roles={["USER", "ADMIN"]}>
+                // <ProtectedRoute roles={["USER", "ADMIN"]}>
                   <ReviewPage />
-                </ProtectedRoute>
+                // </ProtectedRoute>
               }
             />
 
@@ -135,27 +135,27 @@ export default function App() {
             <Route
               path="/admin-dashboard"
               element={
-                <ProtectedRoute roles={["ADMIN"]}>
+                // <ProtectedRoute roles={["ADMIN"]}>
                   <AdminDashboard />
-                </ProtectedRoute>
+                // </ProtectedRoute>
               }
             />
 
             <Route
               path="/update-user/:accountID"
               element={
-                <ProtectedRoute roles={["ADMIN"]}>
+                // <ProtectedRoute roles={["ADMIN"]}>
                   <UpdateUserPage />
-                </ProtectedRoute>
+                // </ProtectedRoute>
               }
             />
 
             <Route
               path="/update-review/:reviewID"
               element={
-                <ProtectedRoute roles={["ADMIN"]}>
+                // <ProtectedRoute roles={["ADMIN"]}>
                   <UpdateReviewPage />
-                </ProtectedRoute>
+                // </ProtectedRoute>
               }
             />
 
@@ -163,36 +163,36 @@ export default function App() {
             <Route
               path="/user-management"
               element={
-                <ProtectedRoute roles={["ADMIN"]}>
+                // <ProtectedRoute roles={["ADMIN"]}>
                   <UserManagementPage />
-                </ProtectedRoute>
+                // </ProtectedRoute>
               }
             />
 
             <Route
               path="/admin-register"
               element={
-                <ProtectedRoute roles={["ADMIN"]}>
+                // <ProtectedRoute roles={["ADMIN"]}>
                   <AdminRegister />
-                </ProtectedRoute>
+                // </ProtectedRoute>
               }
             />
 
             <Route
               path="/review-management"
               element={
-                <ProtectedRoute roles={["ADMIN"]}>
+                // <ProtectedRoute roles={["ADMIN"]}>
                   <ReviewManagementPage />
-                </ProtectedRoute>
+                // </ProtectedRoute>
               }
             />
 
             <Route
               path="/add-review"
               element={
-                <ProtectedRoute roles={["ADMIN"]}>
+                // <ProtectedRoute roles={["ADMIN"]}>
                   <AddReview />
-                </ProtectedRoute>
+                // </ProtectedRoute>
               }
             />
 
