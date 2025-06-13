@@ -72,169 +72,172 @@ class AppStateNotifier extends ChangeNotifier {
 }
 
 GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
-      initialLocation: '/',
-      debugLogDiagnostics: true,
-      refreshListenable: appStateNotifier,
-      navigatorKey: appNavigatorKey,
-      errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? NavBarPage() : SignUpPageWidget(),
-      routes: [
-        FFRoute(
-          name: '_initialize',
-          path: '/',
-          builder: (context, _) =>
-              appStateNotifier.loggedIn ? NavBarPage() : SignUpPageWidget(),
-        ),
-        FFRoute(
-          name: HomePageWidget.routeName,
-          path: HomePageWidget.routePath,
-          builder: (context, params) => params.isEmpty
-              ? NavBarPage(initialPage: 'HomePage')
-              : HomePageWidget(),
-        ),
-        FFRoute(
-          name: SignUpPageWidget.routeName,
-          path: SignUpPageWidget.routePath,
-          builder: (context, params) => SignUpPageWidget(),
-        ),
-        FFRoute(
-          name: ChangePasswordWidget.routeName,
-          path: ChangePasswordWidget.routePath,
-          builder: (context, params) => ChangePasswordWidget(),
-        ),
-        FFRoute(
-          name: PostFormPageWidget.routeName,
-          path: PostFormPageWidget.routePath,
-          builder: (context, params) => PostFormPageWidget(),
-        ),
-        FFRoute(
-          name: EditFormWidget.routeName,
-          path: EditFormWidget.routePath,
-          builder: (context, params) {
-            final reviewID = params.state.extraMap['reviewID'] as int?;
-            return EditFormWidget(reviewID: reviewID);
-          },
-        ),
-        FFRoute(
-          name: AccessoriesPageWidget.routeName,
-          path: AccessoriesPageWidget.routePath,
-          builder: (context, params) => AccessoriesPageWidget(),
-        ),
-        FFRoute(
-          name: TopRatedPageWidget.routeName,
-          path: TopRatedPageWidget.routePath,
-          builder: (context, params) => TopRatedPageWidget(),
-        ),
-        FFRoute(
-          name: LatestReleasePageWidget.routeName,
-          path: LatestReleasePageWidget.routePath,
-          builder: (context, params) => LatestReleasePageWidget(),
-        ),
-        FFRoute(
-          name: ComparePageWidget.routeName,
-          path: ComparePageWidget.routePath,
-          builder: (context, params) => ComparePageWidget(),
-        ),
-        FFRoute(
-          name: ConsolesPageWidget.routeName,
-          path: ConsolesPageWidget.routePath,
-          builder: (context, params) => ConsolesPageWidget(),
-        ),
-        FFRoute(
-          name: SmartphonePageWidget.routeName,
-          path: SmartphonePageWidget.routePath,
-          builder: (context, params) => SmartphonePageWidget(),
-        ),
-        FFRoute(
-          name: SearchPageWidget.routeName,
-          path: SearchPageWidget.routePath,
-          builder: (context, params) => params.isEmpty
-              ? NavBarPage(initialPage: 'SearchPage')
-              : SearchPageWidget(),
-        ),
-        FFRoute(
-          name: DesktopsnLaptopPageWidget.routeName,
-          path: DesktopsnLaptopPageWidget.routePath,
-          builder: (context, params) => DesktopsnLaptopPageWidget(),
-        ),
-        FFRoute(
-          name: ProfilePageWidget.routeName,
-          path: ProfilePageWidget.routePath,
-          builder: (context, params) => params.isEmpty
-              ? NavBarPage(initialPage: 'ProfilePage')
-              : ProfilePageWidget(),
-        ),
-        FFRoute(
-          name: EditUserPageWidget.routeName,
-          path: EditUserPageWidget.routePath,
-          builder: (context, params) {
-            final accountID = params.state.extraMap['accountID'] as int?;
-            return EditUserPageWidget(accountID: accountID);
-          },
-        ),
-        FFRoute(
-          name: ReviewPageWidget.routeName,
-          path: ReviewPageWidget.routePath,
-          builder: (context, params) {
-            final reviewID = params.state.extraMap['reviewID'] as int?;
-            return ReviewPageWidget(reviewID: reviewID);
-          },
-        ),
-        FFRoute(
-          name: UsernReviewManagementPageWidget.routeName,
-          path: UsernReviewManagementPageWidget.routePath,
-          builder: (context, params) => UsernReviewManagementPageWidget(),
-        ),
-        FFRoute(
-          name: AddUserPageWidget.routeName,
-          path: AddUserPageWidget.routePath,
-          builder: (context, params) => AddUserPageWidget(),
-        )
-      ].map((r) => r.toRoute(appStateNotifier)).toList(),
-    );
+  initialLocation: '/',
+  debugLogDiagnostics: true,
+  refreshListenable: appStateNotifier,
+  navigatorKey: appNavigatorKey,
+  errorBuilder: (context, state) =>
+  appStateNotifier.loggedIn ? NavBarPage() : SignUpPageWidget(),
+  routes: [
+    FFRoute(
+      name: '_initialize',
+      path: '/',
+      builder: (context, _) =>
+      appStateNotifier.loggedIn ? NavBarPage() : SignUpPageWidget(),
+    ),
+    FFRoute(
+      name: HomePageWidget.routeName,
+      path: HomePageWidget.routePath,
+      builder: (context, params) => params.isEmpty
+          ? NavBarPage(initialPage: 'HomePage')
+          : HomePageWidget(),
+    ),
+    FFRoute(
+      name: SignUpPageWidget.routeName,
+      path: SignUpPageWidget.routePath,
+      builder: (context, params) => SignUpPageWidget(),
+    ),
+    FFRoute(
+      name: ChangePasswordWidget.routeName,
+      path: ChangePasswordWidget.routePath,
+      builder: (context, params) => ChangePasswordWidget(),
+    ),
+    FFRoute(
+      name: PostFormPageWidget.routeName,
+      path: PostFormPageWidget.routePath,
+      builder: (context, params) => PostFormPageWidget(),
+    ),
+    FFRoute(
+      name: EditFormWidget.routeName,
+      path: EditFormWidget.routePath,
+      builder: (context, params) {
+        final reviewID = params.state.extraMap['reviewID'] as int?;
+        return EditFormWidget(reviewID: reviewID);
+      },
+    ),
+    FFRoute(
+      name: AccessoriesPageWidget.routeName,
+      path: AccessoriesPageWidget.routePath,
+      builder: (context, params) => AccessoriesPageWidget(),
+    ),
+    FFRoute(
+      name: TopRatedPageWidget.routeName,
+      path: TopRatedPageWidget.routePath,
+      builder: (context, params) => TopRatedPageWidget(),
+    ),
+    FFRoute(
+      name: LatestReleasePageWidget.routeName,
+      path: LatestReleasePageWidget.routePath,
+      builder: (context, params) => LatestReleasePageWidget(),
+    ),
+    FFRoute(
+      name: ComparePageWidget.routeName,
+      path: ComparePageWidget.routePath,
+      builder: (context, params) {
+        final reviewID = params.state.extraMap['reviewID'] as int?;
+        return ComparePageWidget(reviewID: reviewID);
+      },
+    ),
+    FFRoute(
+      name: ConsolesPageWidget.routeName,
+      path: ConsolesPageWidget.routePath,
+      builder: (context, params) => ConsolesPageWidget(),
+    ),
+    FFRoute(
+      name: SmartphonePageWidget.routeName,
+      path: SmartphonePageWidget.routePath,
+      builder: (context, params) => SmartphonePageWidget(),
+    ),
+    FFRoute(
+      name: SearchPageWidget.routeName,
+      path: SearchPageWidget.routePath,
+      builder: (context, params) => params.isEmpty
+          ? NavBarPage(initialPage: 'SearchPage')
+          : SearchPageWidget(),
+    ),
+    FFRoute(
+      name: DesktopsnLaptopPageWidget.routeName,
+      path: DesktopsnLaptopPageWidget.routePath,
+      builder: (context, params) => DesktopsnLaptopPageWidget(),
+    ),
+    FFRoute(
+      name: ProfilePageWidget.routeName,
+      path: ProfilePageWidget.routePath,
+      builder: (context, params) => params.isEmpty
+          ? NavBarPage(initialPage: 'ProfilePage')
+          : ProfilePageWidget(),
+    ),
+    FFRoute(
+      name: EditUserPageWidget.routeName,
+      path: EditUserPageWidget.routePath,
+      builder: (context, params) {
+        final accountID = params.state.extraMap['accountID'] as int?;
+        return EditUserPageWidget(accountID: accountID);
+      },
+    ),
+    FFRoute(
+      name: ReviewPageWidget.routeName,
+      path: ReviewPageWidget.routePath,
+      builder: (context, params) {
+        final reviewID = params.state.extraMap['reviewID'] as int?;
+        return ReviewPageWidget(reviewID: reviewID);
+      },
+    ),
+    FFRoute(
+      name: UsernReviewManagementPageWidget.routeName,
+      path: UsernReviewManagementPageWidget.routePath,
+      builder: (context, params) => UsernReviewManagementPageWidget(),
+    ),
+    FFRoute(
+      name: AddUserPageWidget.routeName,
+      path: AddUserPageWidget.routePath,
+      builder: (context, params) => AddUserPageWidget(),
+    )
+  ].map((r) => r.toRoute(appStateNotifier)).toList(),
+);
 
 extension NavParamExtensions on Map<String, String?> {
   Map<String, String> get withoutNulls => Map.fromEntries(
-        entries
-            .where((e) => e.value != null)
-            .map((e) => MapEntry(e.key, e.value!)),
-      );
+    entries
+        .where((e) => e.value != null)
+        .map((e) => MapEntry(e.key, e.value!)),
+  );
 }
 
 extension NavigationExtensions on BuildContext {
   void goNamedAuth(
-    String name,
-    bool mounted, {
-    Map<String, String> pathParameters = const <String, String>{},
-    Map<String, String> queryParameters = const <String, String>{},
-    Object? extra,
-    bool ignoreRedirect = false,
-  }) =>
+      String name,
+      bool mounted, {
+        Map<String, String> pathParameters = const <String, String>{},
+        Map<String, String> queryParameters = const <String, String>{},
+        Object? extra,
+        bool ignoreRedirect = false,
+      }) =>
       !mounted || GoRouter.of(this).shouldRedirect(ignoreRedirect)
           ? null
           : goNamed(
-              name,
-              pathParameters: pathParameters,
-              queryParameters: queryParameters,
-              extra: extra,
-            );
+        name,
+        pathParameters: pathParameters,
+        queryParameters: queryParameters,
+        extra: extra,
+      );
 
   void pushNamedAuth(
-    String name,
-    bool mounted, {
-    Map<String, String> pathParameters = const <String, String>{},
-    Map<String, String> queryParameters = const <String, String>{},
-    Object? extra,
-    bool ignoreRedirect = false,
-  }) =>
+      String name,
+      bool mounted, {
+        Map<String, String> pathParameters = const <String, String>{},
+        Map<String, String> queryParameters = const <String, String>{},
+        Object? extra,
+        bool ignoreRedirect = false,
+      }) =>
       !mounted || GoRouter.of(this).shouldRedirect(ignoreRedirect)
           ? null
           : pushNamed(
-              name,
-              pathParameters: pathParameters,
-              queryParameters: queryParameters,
-              extra: extra,
-            );
+        name,
+        pathParameters: pathParameters,
+        queryParameters: queryParameters,
+        extra: extra,
+      );
 
   void safePop() {
     // If there is only one route on the stack, navigate to the initial
@@ -284,30 +287,30 @@ class FFParameters {
   // present is the special extra parameter reserved for the transition info.
   bool get isEmpty =>
       state.allParams.isEmpty ||
-      (state.allParams.length == 1 &&
-          state.extraMap.containsKey(kTransitionInfoKey));
+          (state.allParams.length == 1 &&
+              state.extraMap.containsKey(kTransitionInfoKey));
   bool isAsyncParam(MapEntry<String, dynamic> param) =>
       asyncParams.containsKey(param.key) && param.value is String;
   bool get hasFutures => state.allParams.entries.any(isAsyncParam);
   Future<bool> completeFutures() => Future.wait(
-        state.allParams.entries.where(isAsyncParam).map(
+    state.allParams.entries.where(isAsyncParam).map(
           (param) async {
-            final doc = await asyncParams[param.key]!(param.value)
-                .onError((_, __) => null);
-            if (doc != null) {
-              futureParamValues[param.key] = doc;
-              return true;
-            }
-            return false;
-          },
-        ),
-      ).onError((_, __) => [false]).then((v) => v.every((e) => e));
+        final doc = await asyncParams[param.key]!(param.value)
+            .onError((_, __) => null);
+        if (doc != null) {
+          futureParamValues[param.key] = doc;
+          return true;
+        }
+        return false;
+      },
+    ),
+  ).onError((_, __) => [false]).then((v) => v.every((e) => e));
 
   dynamic getParam<T>(
-    String paramName,
-    ParamType type, {
-    bool isList = false,
-  }) {
+      String paramName,
+      ParamType type, {
+        bool isList = false,
+      }) {
     if (futureParamValues.containsKey(paramName)) {
       return futureParamValues[paramName];
     }
@@ -346,69 +349,69 @@ class FFRoute {
   final List<GoRoute> routes;
 
   GoRoute toRoute(AppStateNotifier appStateNotifier) => GoRoute(
-        name: name,
-        path: path,
-        redirect: (context, state) {
-          if (appStateNotifier.shouldRedirect) {
-            final redirectLocation = appStateNotifier.getRedirectLocation();
-            appStateNotifier.clearRedirectLocation();
-            return redirectLocation;
-          }
+    name: name,
+    path: path,
+    redirect: (context, state) {
+      if (appStateNotifier.shouldRedirect) {
+        final redirectLocation = appStateNotifier.getRedirectLocation();
+        appStateNotifier.clearRedirectLocation();
+        return redirectLocation;
+      }
 
-          if (requireAuth && !appStateNotifier.loggedIn) {
-            appStateNotifier.setRedirectLocationIfUnset(state.uri.toString());
-            return '/signUpPage';
-          }
-          return null;
-        },
-        pageBuilder: (context, state) {
-          fixStatusBarOniOS16AndBelow(context);
-          final ffParams = FFParameters(state, asyncParams);
-          final page = ffParams.hasFutures
-              ? FutureBuilder(
-                  future: ffParams.completeFutures(),
-                  builder: (context, _) => builder(context, ffParams),
-                )
-              : builder(context, ffParams);
-          final child = appStateNotifier.loading
-              ? Center(
-                  child: SizedBox(
-                    width: 50.0,
-                    height: 50.0,
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        FlutterFlowTheme.of(context).primary,
-                      ),
-                    ),
-                  ),
-                )
-              : page;
+      if (requireAuth && !appStateNotifier.loggedIn) {
+        appStateNotifier.setRedirectLocationIfUnset(state.uri.toString());
+        return '/signUpPage';
+      }
+      return null;
+    },
+    pageBuilder: (context, state) {
+      fixStatusBarOniOS16AndBelow(context);
+      final ffParams = FFParameters(state, asyncParams);
+      final page = ffParams.hasFutures
+          ? FutureBuilder(
+        future: ffParams.completeFutures(),
+        builder: (context, _) => builder(context, ffParams),
+      )
+          : builder(context, ffParams);
+      final child = appStateNotifier.loading
+          ? Center(
+        child: SizedBox(
+          width: 50.0,
+          height: 50.0,
+          child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(
+              FlutterFlowTheme.of(context).primary,
+            ),
+          ),
+        ),
+      )
+          : page;
 
-          final transitionInfo = state.transitionInfo;
-          return transitionInfo.hasTransition
-              ? CustomTransitionPage(
-                  key: state.pageKey,
-                  child: child,
-                  transitionDuration: transitionInfo.duration,
-                  transitionsBuilder:
-                      (context, animation, secondaryAnimation, child) =>
-                          PageTransition(
-                    type: transitionInfo.transitionType,
-                    duration: transitionInfo.duration,
-                    reverseDuration: transitionInfo.duration,
-                    alignment: transitionInfo.alignment,
-                    child: child,
-                  ).buildTransitions(
-                    context,
-                    animation,
-                    secondaryAnimation,
-                    child,
-                  ),
-                )
-              : MaterialPage(key: state.pageKey, child: child);
-        },
-        routes: routes,
-      );
+      final transitionInfo = state.transitionInfo;
+      return transitionInfo.hasTransition
+          ? CustomTransitionPage(
+        key: state.pageKey,
+        child: child,
+        transitionDuration: transitionInfo.duration,
+        transitionsBuilder:
+            (context, animation, secondaryAnimation, child) =>
+            PageTransition(
+              type: transitionInfo.transitionType,
+              duration: transitionInfo.duration,
+              reverseDuration: transitionInfo.duration,
+              alignment: transitionInfo.alignment,
+              child: child,
+            ).buildTransitions(
+              context,
+              animation,
+              secondaryAnimation,
+              child,
+            ),
+      )
+          : MaterialPage(key: state.pageKey, child: child);
+    },
+    routes: routes,
+  );
 }
 
 class TransitionInfo {
@@ -442,9 +445,9 @@ class RootPageContext {
   }
 
   static Widget wrap(Widget child, {String? errorRoute}) => Provider.value(
-        value: RootPageContext(true, errorRoute),
-        child: child,
-      );
+    value: RootPageContext(true, errorRoute),
+    child: child,
+  );
 }
 
 extension GoRouterLocationExtension on GoRouter {

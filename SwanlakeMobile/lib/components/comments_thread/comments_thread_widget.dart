@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,6 +19,68 @@ class _CommentsThreadWidgetState extends State<CommentsThreadWidget> {
   String? error;
   List<Comment> comments = [];
   TextEditingController _commentController = TextEditingController();
+  ScrollController _scrollController = ScrollController();
+
+  late String userName;
+  late int accountID;
+
+  Future<void> addComment(String commentText) async {
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('auth_token');
+      if (token == null) {
+        throw Exception('Token not found');
+      }
+
+      final responseAccount = await http.get(
+        Uri.parse('http://10.0.2.2:8000/api/user'),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Accept': 'application/json',
+        },
+      );
+
+      if (responseAccount.statusCode == 200) {
+        final data = jsonDecode(responseAccount.body);
+        userName = data['name'];
+        accountID = data['accountID'] ?? 0;
+      } else {
+        print('Failed to fetch user: ${responseAccount.body}');
+      }
+
+      final response = await http.post(
+        Uri.parse('http://10.0.2.2:8000/api/add/comment'),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Accept': 'application/json',
+        },
+        body: {
+          'commentText': commentText,
+          'commentAccountID': accountID.toString(),
+          'commentReviewID': widget.reviewID.toString(),
+          'commentUsername': userName,
+        },
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        print('Comment added successfully');
+        fetchComments();
+      } else {
+        throw Exception('Failed to add comment');
+      }
+
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error: $e")));
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
 
   // Fetch comments from API
   Future<void> fetchComments() async {
@@ -48,6 +111,13 @@ class _CommentsThreadWidgetState extends State<CommentsThreadWidget> {
         setState(() {
           comments = commentsJson.map((item) => Comment.fromJson(item)).toList();
         });
+
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (_scrollController.hasClients) {
+            _scrollController.jumpTo(_scrollController.position.maxScrollExtent);  // Scroll to the top
+          }
+        });
+
       } else {
         throw Exception('Gagal memuat komentar: ${response.statusCode}');
       }
@@ -69,6 +139,13 @@ class _CommentsThreadWidgetState extends State<CommentsThreadWidget> {
   }
 
   @override
+  void dispose() {
+    _scrollController.dispose();
+    _commentController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -79,13 +156,15 @@ class _CommentsThreadWidgetState extends State<CommentsThreadWidget> {
             ? Center(child: CircularProgressIndicator()) // Show loading spinner
             : error != null
             ? Center(child: Text('Error: $error')) // Show error message if any
-            : SingleChildScrollView(
-          child: Column(
-            children: [
-              // Displaying the fetched comments in ListView
-              ListView.builder(
+            : Column(
+          children: [
+            // Displaying the fetched comments in ListView, reverse the order of comments to show the latest at the top
+            Expanded(
+              child: ListView.builder(
+                controller: _scrollController,  // Use scroll controller to manage the scroll position
+                reverse: true,  // This will make the newest comment appear at the top
                 shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
+                physics: AlwaysScrollableScrollPhysics(),
                 itemCount: comments.length,
                 itemBuilder: (context, index) {
                   final comment = comments[index];
@@ -96,62 +175,54 @@ class _CommentsThreadWidgetState extends State<CommentsThreadWidget> {
                   );
                 },
               ),
-              // TextField to add a new comment
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller: _commentController,
-                        decoration: InputDecoration(
-                          hintText: 'Add a comment...',
-                          filled: true,
-                          fillColor: Colors.grey[200],
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                            borderSide: BorderSide.none,
-                          ),
-                          hintStyle: TextStyle(
-                            color: Colors.black.withOpacity(0.6),
-                            fontSize: 16,
-                          ),
+            ),
+            // TextField to add a new comment
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: _commentController,
+                      decoration: InputDecoration(
+                        hintText: 'Add a comment...',
+                        filled: true,
+                        fillColor: Colors.grey[200],
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide.none,
                         ),
-                        style: TextStyle(  // This will set the text color while typing
-                          color: Colors.black,  // Ensure text color is black or any contrasting color
+                        hintStyle: TextStyle(
+                          color: Colors.black.withOpacity(0.6),
+                          fontSize: 16,
                         ),
                       ),
-                    ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.send_rounded,
-                        color: Colors.blue,
-                        size: 30.0,
+                      style: TextStyle(  // This will set the text color while typing
+                        color: Colors.black,  // Ensure text color is black or any contrasting color
                       ),
-                      onPressed: () {
-                        String commentText = _commentController.text;
-                        if (commentText.isNotEmpty) {
-                          // Send comment action
-                          _addComment(commentText);
-                        }
-                      },
                     ),
-                  ],
-                ),
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      Icons.send_rounded,
+                      color: Colors.blue,
+                      size: 30.0,
+                    ),
+                    onPressed: () {
+                      String commentText = _commentController.text;
+                      if (commentText.isNotEmpty) {
+                        // Send comment action
+                        addComment(commentText);
+                      }
+                    },
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
-  }
-
-  // Function to add a comment (send to API)
-  Future<void> _addComment(String commentText) async {
-    // Implement the POST API call to send comment to server
-    print('Comment sent: $commentText');
-    // After sending, you can fetch the comments again to update the UI
-    fetchComments();
   }
 }
 
@@ -207,7 +278,6 @@ class CommentCard extends StatelessWidget {
     );
   }
 
-  // Function to format timestamp using timeago
   String _formatTimestamp(String timestamp) {
     try {
       // Parse the original timestamp into DateTime object
