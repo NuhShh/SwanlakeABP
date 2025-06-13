@@ -37,13 +37,13 @@ class UserService {
   }
 
   // Register function
-  static async register(userData: UserData): Promise<{ message: string }> {
+  static async register(userData: UserData): Promise<AxiosResponse> {
     try {
       const response: AxiosResponse<{ message: string }> = await axios.post(
         `${UserService.BASE_URL}/register`,
         userData
       );
-      return response.data;
+      return response;  // Return the full Axios response object
     } catch (err: any) {
       if (err.response?.data?.message) {
         throw new Error(err.response.data.message);
@@ -51,6 +51,7 @@ class UserService {
       throw err;
     }
   }
+
 
   // Get all users - Updated route
   static async getAllUsers(token: string): Promise<{ users: Profile[] }> {

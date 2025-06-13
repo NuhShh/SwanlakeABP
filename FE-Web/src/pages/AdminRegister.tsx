@@ -29,7 +29,7 @@ const AddAdminPage: React.FC = () => {
     try {
       const response = await UserService.register(formData);
 
-      if (response.message === "User Saved Successfully") {
+      if (response.status === 201) {
         setFormData({
           name: "",
           email: "",
@@ -39,7 +39,7 @@ const AddAdminPage: React.FC = () => {
         alert("Admin registered successfully");
         navigate("/user-management");
       } else {
-        alert(response.message);
+        alert("Failed to register admin");
       }
     } catch (error: any) {
       console.error("Error registering admin:", error);

@@ -21,6 +21,22 @@ const LoginPage: React.FC = () => {
     // Jika `userData` memiliki properti user, ambil role dari sana
     const role = userData.role || (userData as any).user?.role;
 
+    const accountID = (userData as any).user?.accountID;
+
+    const name = (userData as any).user?.name;
+
+    if (name) {
+      localStorage.setItem("name", name);
+    } else {
+      console.warn("Name not found in response.");
+    }
+    
+    if (accountID) {
+      localStorage.setItem("accountID", accountID);
+    } else {
+      console.warn("Account ID not found in response.");
+    }
+
     if (role) {
       localStorage.setItem("role", role);
     } else {

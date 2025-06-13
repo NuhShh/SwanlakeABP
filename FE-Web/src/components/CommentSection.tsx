@@ -60,19 +60,17 @@ const CommentSection: React.FC<{ reviewID: string }> = ({ reviewID }) => {
         return;
       }
 
-      // Mendapatkan data komentar dari API dengan tipe eksplisit CommentResponse
       const response = await axios.get<CommentResponse>(
         `http://127.0.0.1:8000/api/get/comments/${reviewID}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`, // Sertakan token di header
+            Authorization: `Bearer ${token}`,
           },
         }
       );
 
-      console.log("Full comments data:", response.data); // Cek data yang diterima
+      console.log("Full comments data:", response.data);
 
-      // Cek apakah response.data adalah array atau objek dengan properti comments
       if (Array.isArray(response.data)) {
         const filteredComments = response.data.filter(
           (comment) => String(comment.commentReviewID) === String(reviewID)
@@ -80,14 +78,13 @@ const CommentSection: React.FC<{ reviewID: string }> = ({ reviewID }) => {
         console.log("Filtered comments:", filteredComments);
         setComments(filteredComments);
       } else if (response.data && response.data.comments) {
-        // Jika data adalah objek dan memiliki properti 'comments'
         const filteredComments = response.data.comments.filter(
           (comment: Comment) => String(comment.commentReviewID) === String(reviewID)
         );
         console.log("Filtered comments from object:", filteredComments);
         setComments(filteredComments);
       } else {
-        console.error("Data yang diterima tidak memiliki properti comments atau bukan array:", response.data);
+        console.error("Data tidak memiliki properti 'comments' atau bukan array:", response.data);
       }
     } catch (error) {
       console.error("Error fetching comments:", error);
@@ -96,6 +93,10 @@ const CommentSection: React.FC<{ reviewID: string }> = ({ reviewID }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    profileInfo.accountID = localStorage.getItem("accountID") || profileInfo.accountID;
+    profileInfo.name = localStorage.getItem("name") || profileInfo.name;
+
     if (!profileInfo.accountID) {
       console.error("Profile information is missing");
       return;
@@ -141,12 +142,9 @@ const CommentSection: React.FC<{ reviewID: string }> = ({ reviewID }) => {
             required
           />
         </div>
-        <input
-          type="hidden"
-          value={profileInfo.accountID || ""}
-          name="commentAccountID"
-        />
+        <input type="hidden" value={profileInfo.accountID || ""} name="commentAccountID" />
         <input type="hidden" value={reviewID} name="commentReviewID" />
+        <input type="hidden" value={profileInfo.name} name="commentUsername" />
         <button
           type="submit"
           className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
@@ -162,18 +160,13 @@ const CommentSection: React.FC<{ reviewID: string }> = ({ reviewID }) => {
             key={comment.commentID}
             className="flex items-start p-4 mb-3 bg-white rounded-lg shadow"
           >
-            {/* User Icon */}
             <div className="mr-4">
               <div className="w-10 h-10 flex items-center justify-center bg-gray-100 rounded-full">
-                <User className="text-gray-500 w-6 h-6" />{" "}
-                {/* Ikon Lucide React */}
+                <User className="text-gray-500 w-6 h-6" />
               </div>
             </div>
-            {/* Comment Content */}
             <div>
-              <p className="text-gray-800 font-bold">
-                {comment.commentUsername}
-              </p>
+              <p className="text-gray-800 font-bold">{comment.commentUsername}</p>
               <p className="text-gray-600">{comment.commentText}</p>
             </div>
           </div>

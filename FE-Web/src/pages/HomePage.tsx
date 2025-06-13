@@ -16,8 +16,18 @@ interface Review {
   price: number;
   imageName: string;
   badge?: string;
-  date?: string;
+  createdAt?: string;
   rating: number;
+}
+
+function formatDate(dateStr: string): string {
+  try {
+    const dt = new Date(dateStr);
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    return `${dt.getDate().toString().padStart(2, "0")} ${months[dt.getMonth()]} ${dt.getFullYear()}`;
+  } catch {
+    return dateStr;
+  }
 }
 
 export default function HomePage() {
@@ -118,7 +128,7 @@ export default function HomePage() {
                   image={review.imageName}
                   title={review.reviewTitle}
                   description={review.cardDesc}
-                  date={review.date || "N/A"}
+                  date={review.createdAt ? `Reviewed on ${formatDate(review.createdAt)}` : ""}
                   badge={review.badge}
                   reviewID={review.reviewID}
                   index={index}
@@ -144,7 +154,7 @@ export default function HomePage() {
                   image={review.imageName}
                   title={review.reviewTitle}
                   description={review.cardDesc}
-                  date={review.date || "N/A"}
+                  date={review.createdAt ? `Reviewed on ${formatDate(review.createdAt)}` : ""}
                   badge={review.badge}
                   reviewID={review.reviewID}
                   index={index}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Heart, Scale, Share2, ArrowLeft, MessageSquare } from "lucide-react";
+import { Scale, ArrowLeft } from "lucide-react";
 import ReactStars from "react-stars";
 import CommentSection from "../components/CommentSection";
 import ProductSpecs from "../components/ProductSpecs";
@@ -152,7 +152,7 @@ export default function ReviewPage() {
         {/* Back Button */}
         <div className="fixed top-4 left-4 z-50">
           <button
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/homepage")}
             className="flex items-center gap-2 dark:text-white bg-white dark:bg-black px-4 py-2 rounded-lg shadow hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
           >
             <ArrowLeft className="w-5 h-5" />
@@ -176,23 +176,10 @@ export default function ReviewPage() {
                 </h1>
                 <div className="flex items-center gap-4">
                   <button
-                    onClick={() => setIsWishlisted(!isWishlisted)}
-                    className={`p-2 rounded-full transition-colors ${
-                      isWishlisted
-                        ? "bg-red-100 text-red-500 dark:bg-red-900 dark:text-red-300"
-                        : "bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-300"
-                    }`}
-                  >
-                    <Heart className={`w-6 h-6 ${isWishlisted ? "fill-current" : ""}`} />
-                  </button>
-                  <button
                     onClick={handleCompare}
                     className="p-2 rounded-full bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-300 transition-colors"
                   >
                     <Scale className="w-6 h-6" />
-                  </button>
-                  <button className="p-2 rounded-full bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-300 transition-colors">
-                    <Share2 className="w-6 h-6" />
                   </button>
                 </div>
               </div>
@@ -209,11 +196,6 @@ export default function ReviewPage() {
                   <span className="text-lg font-semibold dark:text-white">
                     {review.rating || "No rating"}
                   </span>
-                </div>
-                <div className="text-gray-500 dark:text-gray-400">|</div>
-                <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
-                  <MessageSquare className="w-5 h-5" />
-                  <span>128 comments</span>
                 </div>
               </div>
               <p className="text-gray-600 dark:text-gray-300 mb-6">

@@ -33,7 +33,7 @@ function RegistrationPage() {
   try {
     const response = await UserService.register(formData);
 
-    if (response.message === "User Saved Successfully") {
+    if (response.status === 201) {
       // Reset form on success
       setFormData({
         name: "",
@@ -46,7 +46,7 @@ function RegistrationPage() {
       navigate("/");  // Navigate to login page after successful registration
     } else {
       // If the backend response message is different
-      alert(response.message || "Registration failed");
+      alert("Failed to register user");
     }
   } catch (error: any) {
     // If error occurred during API call

@@ -91,7 +91,7 @@ export default function LatestReviewsPage() {
       {/* Back Button */}
       <div className="fixed top-4 left-4 z-50">
         <button
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/homepage")}
           className="flex items-center gap-2 dark:text-white bg-white dark:bg-black px-4 py-2 rounded-lg shadow hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
         >
           <ArrowLeft className="w-5 h-5" />
