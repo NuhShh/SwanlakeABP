@@ -1,11 +1,11 @@
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class EditFormWidget extends StatefulWidget {
   final int? reviewID;
@@ -21,7 +21,6 @@ class EditFormWidget extends StatefulWidget {
 
 class _EditFormWidgetState extends State<EditFormWidget> {
   late TextEditingController productNameController;
-  late TextEditingController productTypeController;
   late TextEditingController reviewTitleController;
   late TextEditingController cardDescController;
   late TextEditingController processorController;
@@ -41,16 +40,17 @@ class _EditFormWidgetState extends State<EditFormWidget> {
   late TextEditingController imageNameController;
   late TextEditingController keyFeaturesController;
   late TextEditingController performanceController;
+  late TextEditingController ratingController;
 
   String? error;
   bool isLoading = false;
   late int reviewID;
+  String selectedProductType = 'Smartphone';  // Set default value
 
   @override
   void initState() {
     super.initState();
     productNameController = TextEditingController();
-    productTypeController = TextEditingController();
     reviewTitleController = TextEditingController();
     cardDescController = TextEditingController();
     processorController = TextEditingController();
@@ -70,6 +70,7 @@ class _EditFormWidgetState extends State<EditFormWidget> {
     imageNameController = TextEditingController();
     keyFeaturesController = TextEditingController();
     performanceController = TextEditingController();
+    ratingController = TextEditingController();
 
     if (widget.reviewID != null) {
       reviewID = widget.reviewID!;
@@ -104,7 +105,7 @@ class _EditFormWidgetState extends State<EditFormWidget> {
 
         setState(() {
           productNameController.text = review['productName'] ?? '';
-          productTypeController.text = review['productType'] ?? '';
+          selectedProductType = review['productType'] ?? 'Smartphone'; // Set default
           reviewTitleController.text = review['reviewTitle'] ?? '';
           cardDescController.text = review['cardDesc'] ?? '';
           processorController.text = review['processor'] ?? '';
@@ -119,11 +120,12 @@ class _EditFormWidgetState extends State<EditFormWidget> {
           batteryDescController.text = review['batteryDesc'] ?? '';
           cameraController.text = review['camera'] ?? '';
           cameraDescController.text = review['cameraDesc'] ?? '';
-          priceController.text = review['price'] ?? '';
+          priceController.text = review['price'].toString() ?? '';
           reviewTextController.text = review['reviewText'] ?? '';
           imageNameController.text = review['imageName'] ?? '';
           keyFeaturesController.text = review['keyFeatures'] ?? '';
           performanceController.text = review['performance'] ?? '';
+          ratingController.text = review['rating']?.toString() ?? '';
         });
       } else {
         throw Exception('Failed to load review data');
@@ -139,6 +141,8 @@ class _EditFormWidgetState extends State<EditFormWidget> {
     }
   }
 
+  List<String> productTypes = ['Smartphone', 'Desktop & Laptop', 'Accessories', 'Console'];
+
   Future<void> updateReview() async {
     setState(() {
       isLoading = true;
@@ -151,6 +155,22 @@ class _EditFormWidgetState extends State<EditFormWidget> {
         throw Exception('Token not found');
       }
 
+      double? parsedRating;
+      if (ratingController.text.isNotEmpty) {
+        parsedRating = double.tryParse(ratingController.text);
+        if (parsedRating == null) {
+          throw Exception('Invalid rating entered. Rating must be a valid number.');
+        }
+      }
+
+      int? parsedPrice;
+      if (priceController.text.isNotEmpty) {
+        parsedPrice = int.tryParse(priceController.text);
+        if (parsedPrice == null) {
+          throw Exception('Invalid price entered. Price must be a valid integer.');
+        }
+      }
+
       final response = await http.put(
         Uri.parse('http://10.0.2.2:8000/api/update/review/$reviewID'),
         headers: {
@@ -159,7 +179,7 @@ class _EditFormWidgetState extends State<EditFormWidget> {
         },
         body: {
           'productName': productNameController.text,
-          'productType': productTypeController.text,
+          'productType': selectedProductType ?? 'Smartphone',
           'reviewTitle': reviewTitleController.text,
           'cardDesc': cardDescController.text,
           'processor': processorController.text,
@@ -179,6 +199,7 @@ class _EditFormWidgetState extends State<EditFormWidget> {
           'imageName': imageNameController.text,
           'keyFeatures': keyFeaturesController.text,
           'performance': performanceController.text,
+          'rating': parsedRating?.toString() ?? '',
         },
       );
 
@@ -232,7 +253,6 @@ class _EditFormWidgetState extends State<EditFormWidget> {
   @override
   void dispose() {
     productNameController.dispose();
-    productTypeController.dispose();
     reviewTitleController.dispose();
     cardDescController.dispose();
     processorController.dispose();
@@ -252,13 +272,14 @@ class _EditFormWidgetState extends State<EditFormWidget> {
     imageNameController.dispose();
     keyFeaturesController.dispose();
     performanceController.dispose();
+    ratingController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Edit Review")),
+      appBar: AppBar(title: Text("Edit Review With Id = $reviewID")),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
@@ -270,15 +291,107 @@ class _EditFormWidgetState extends State<EditFormWidget> {
                 controller: productNameController,
                 decoration: InputDecoration(labelText: 'Product Name'),
               ),
-              TextFormField(
-                controller: productTypeController,
+              DropdownButtonFormField<String>(
+                value: selectedProductType,
                 decoration: InputDecoration(labelText: 'Product Type'),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    selectedProductType = newValue!;
+                  });
+                },
+                items: productTypes.map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
               ),
               TextFormField(
                 controller: reviewTitleController,
                 decoration: InputDecoration(labelText: 'Review Title'),
               ),
-              // Add other fields like price, description, etc.
+              TextFormField(
+                controller: cardDescController,
+                decoration: InputDecoration(labelText: 'Card Description'),
+              ),
+              TextFormField(
+                controller: processorController,
+                decoration: InputDecoration(labelText: 'Processor'),
+              ),
+              TextFormField(
+                controller: processorDescController,
+                decoration: InputDecoration(labelText: 'Processor Description'),
+              ),
+              TextFormField(
+                controller: ramController,
+                decoration: InputDecoration(labelText: 'RAM'),
+              ),
+              TextFormField(
+                controller: ramDescController,
+                decoration: InputDecoration(labelText: 'RAM Description'),
+              ),
+              TextFormField(
+                controller: storageController,
+                decoration: InputDecoration(labelText: 'Storage'),
+              ),
+              TextFormField(
+                controller: storageDescController,
+                decoration: InputDecoration(labelText: 'Storage Description'),
+              ),
+              TextFormField(
+                controller: displayController,
+                decoration: InputDecoration(labelText: 'Display'),
+              ),
+              TextFormField(
+                controller: displayDescController,
+                decoration: InputDecoration(labelText: 'Display Description'),
+              ),
+              TextFormField(
+                controller: batteryController,
+                decoration: InputDecoration(labelText: 'Battery'),
+              ),
+              TextFormField(
+                controller: batteryDescController,
+                decoration: InputDecoration(labelText: 'Battery Description'),
+              ),
+              TextFormField(
+                controller: cameraController,
+                decoration: InputDecoration(labelText: 'Camera'),
+              ),
+              TextFormField(
+                controller: cameraDescController,
+                decoration: InputDecoration(labelText: 'Camera Description'),
+              ),
+              TextFormField(
+                controller: priceController,
+                decoration: InputDecoration(labelText: 'Price'),
+              ),
+              TextFormField(
+                controller: reviewTextController,
+                decoration: InputDecoration(labelText: 'Review Text'),
+                maxLines: 5, // Set larger size for this field
+                keyboardType: TextInputType.multiline,
+              ),
+              TextFormField(
+                controller: imageNameController,
+                decoration: InputDecoration(labelText: 'Image Name'),
+              ),
+              TextFormField(
+                controller: keyFeaturesController,
+                decoration: InputDecoration(labelText: 'Key Features'),
+              ),
+              TextFormField(
+                controller: performanceController,
+                decoration: InputDecoration(labelText: 'Performance'),
+              ),
+              TextFormField(
+                controller: ratingController,
+                decoration: InputDecoration(labelText: 'Rating (0 to 5)'),
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
+                ],
+              ),
               FFButtonWidget(
                 onPressed: updateReview,
                 text: 'Update Review',
