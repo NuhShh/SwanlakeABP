@@ -31,6 +31,7 @@ class _ReviewPageWidgetState extends State<ReviewPageWidget> {
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  String? productName;
   String? imageName;
   String? productType;
   late int reviewID;
@@ -60,6 +61,7 @@ class _ReviewPageWidgetState extends State<ReviewPageWidget> {
 
     if (widget.reviewID != null) {
       reviewID = widget.reviewID!;
+      print('Review ID: ${widget.reviewID}');
       fetchReviewDetail();
     } else {
       error = 'Review ID tidak tersedia';
@@ -93,6 +95,7 @@ class _ReviewPageWidgetState extends State<ReviewPageWidget> {
         final review = data['review'];
 
         setState(() {
+          productName = review['productName'] ?? '';
           reviewTitle = review['reviewTitle'] ?? '';
           reviewText = review['reviewText'] ?? '';
           imageName = review['imageName'] ?? '';
@@ -243,6 +246,16 @@ class _ReviewPageWidgetState extends State<ReviewPageWidget> {
                                 .headlineMedium,
                           ),
                           Text(
+                            '' ?? '',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium,
+                          ),
+                          Text(
+                            productName ?? '',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyLarge,
+                          ),
+                          Text(
                             productType ?? '',
                             style: FlutterFlowTheme.of(context)
                                 .labelSmall,
@@ -291,8 +304,10 @@ class _ReviewPageWidgetState extends State<ReviewPageWidget> {
                                           padding:
                                           MediaQuery.viewInsetsOf(
                                               context),
-                                          child:
-                                          CommentsThreadWidget(reviewID: reviewID),
+                                          child: Container(
+                                            height: MediaQuery.of(context).size.height * 0.75,  // Set height to 75% of the screen
+                                            child: CommentsThreadWidget(reviewID: reviewID),  // Show the CommentsThreadWidget
+                                          ),
                                         );
                                       },
                                     ).then((value) =>
@@ -362,7 +377,9 @@ class _ReviewPageWidgetState extends State<ReviewPageWidget> {
                             child: FFButtonWidget(
                               onPressed: () async {
                                 context.pushNamed(
-                                    ComparePageWidget.routeName);
+                                  ComparePageWidget.routeName,
+                                  extra: {'reviewID': reviewID},
+                                );
                               },
                               text: 'Compare Products',
                               options: FFButtonOptions(
