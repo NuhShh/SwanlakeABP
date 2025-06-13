@@ -292,7 +292,7 @@ class _ReviewPageWidgetState extends State<ReviewPageWidget> {
                                           MediaQuery.viewInsetsOf(
                                               context),
                                           child:
-                                          CommentsThreadWidget(),
+                                          CommentsThreadWidget(reviewID: reviewID),
                                         );
                                       },
                                     ).then((value) =>

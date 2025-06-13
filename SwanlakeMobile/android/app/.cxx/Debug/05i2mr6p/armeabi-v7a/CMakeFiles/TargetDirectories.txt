@@ -1,0 +1,2 @@
+/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/Untitled/SwanlakeMobile/android/app/.cxx/Debug/05i2mr6p/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/farisdzulfiqar/Documents/Telkom University/Kuliah SMT 6/ABP/TUBES FIX/SwanlakeABP/Untitled/SwanlakeMobile/android/app/.cxx/Debug/05i2mr6p/armeabi-v7a/CMakeFiles/rebuild_cache.dir

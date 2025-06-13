@@ -3,17 +3,19 @@ import 'change_password_widget.dart' show ChangePasswordWidget;
 import 'package:flutter/material.dart';
 
 class ChangePasswordModel extends FlutterFlowModel<ChangePasswordWidget> {
-  ///  State fields for stateful widgets in this page.
+  /// State fields for stateful widgets in this page.
 
-  // State field(s) for emailAddres widget.
+  // State field(s) for current password widget.
   FocusNode? emailAddresFocusNode;
   TextEditingController? emailAddresTextController;
   String? Function(BuildContext, String?)? emailAddresTextControllerValidator;
-  // State field(s) for emailAddress widget.
+
+  // State field(s) for new password widget.
   FocusNode? emailAddressFocusNode1;
   TextEditingController? emailAddressTextController1;
   String? Function(BuildContext, String?)? emailAddressTextController1Validator;
-  // State field(s) for emailAddress widget.
+
+  // State field(s) for confirm new password widget.
   FocusNode? emailAddressFocusNode2;
   TextEditingController? emailAddressTextController2;
   String? Function(BuildContext, String?)? emailAddressTextController2Validator;
@@ -25,10 +27,8 @@ class ChangePasswordModel extends FlutterFlowModel<ChangePasswordWidget> {
   void dispose() {
     emailAddresFocusNode?.dispose();
     emailAddresTextController?.dispose();
-
     emailAddressFocusNode1?.dispose();
     emailAddressTextController1?.dispose();
-
     emailAddressFocusNode2?.dispose();
     emailAddressTextController2?.dispose();
   }

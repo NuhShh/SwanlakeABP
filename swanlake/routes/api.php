@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,3 +43,6 @@ Route::get('/get/user', [UserController::class, 'getAllUsers'])->middleware('aut
 Route::get('/get/user/{id}', [UserController::class, 'getUserById'])->middleware('auth:sanctum');
 Route::put('/update/user/{id}', [UserController::class, 'updateUser'])->middleware('auth:sanctum');
 Route::delete('/delete/user/{id}', [UserController::class, 'deleteUser'])->middleware('auth:sanctum');
+
+Route::middleware('auth:sanctum')->get('/get/comments/{review_id}', [CommentController::class, 'getComments']);
+Route::middleware('auth:sanctum')->post('/add/comment', [CommentController::class, 'addComment']);
