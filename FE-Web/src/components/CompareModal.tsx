@@ -13,20 +13,21 @@ interface Review {
   price: number;
   rating: number;
   keyFeatures: string[];
-  processor: string;
-  processorDesc: string;
-  storage: string;
-  storageDesc: string;
-  display: string;
-  displayDesc: string;
-  battery: string;
-  batteryDesc: string;
+  processor: string | null;
+  processorDesc: string | null;
+  storage: string | null;
+  storageDesc: string | null;
+  display: string | null;
+  displayDesc: string | null;
+  battery: string | null;
+  batteryDesc: string | null;
 }
 
 interface CompareModalProps {
   isOpen: boolean;
   onClose: () => void;
   currentProduct: Review;
+  comparableProducts: Review[];
 }
 
 function CompareItem({
@@ -46,7 +47,7 @@ function CompareItem({
           highlight ? "text-green-600 dark:text-green-400" : "dark:text-white"
         }`}
       >
-        {value}
+        {value || "N/A"}
       </span>
     </div>
   );
@@ -61,10 +62,10 @@ function ProductCard({ product }: { product: Review }) {
         className="w-full h-48 object-cover rounded-lg mb-4"
       />
       <div className="space-y-2">
-        <CompareItem label="Processor" value={product.processor} />
-        <CompareItem label="Storage" value={product.storage} />
-        <CompareItem label="Display" value={product.display} />
-        <CompareItem label="Battery" value={product.battery} />
+        <CompareItem label="Processor" value={product.processor || "N/A"} />
+        <CompareItem label="Storage" value={product.storage || "N/A"} />
+        <CompareItem label="Display" value={product.display || "N/A"} />
+        <CompareItem label="Battery" value={product.battery || "N/A"} />
         <CompareItem label="Price" value={`$${product.price}`} highlight />
       </div>
     </div>
@@ -75,21 +76,21 @@ export default function CompareModal({
   isOpen,
   onClose,
   currentProduct,
+  comparableProducts,
 }: CompareModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const [comparableProducts, setComparableProducts] = useState<Review[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Review | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
       animateModal();
-      fetchComparableProducts(currentProduct.productType);
+      setSelectedProduct(comparableProducts.length > 0 ? comparableProducts[0] : null); // Set first product if available
     } else {
       setSelectedProduct(null);
     }
-  }, [isOpen, currentProduct.productType]);
+  }, [isOpen, comparableProducts]);
 
   const animateModal = () => {
     gsap.to(modalRef.current, {
@@ -103,29 +104,6 @@ export default function CompareModal({
       { opacity: 0, y: 20, scale: 0.95 },
       { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "back.out(1.7)" }
     );
-  };
-
-  const fetchComparableProducts = async (productType: string) => {
-    try {
-      setLoading(true);
-      const result = await axios.get(`http://localhost:8080/get/review`);
-      const products = result.data as Review[];
-      const filteredProducts = products.filter(
-        (prod) =>
-          prod.productType === productType &&
-          prod.reviewID !== currentProduct.reviewID
-      );
-      setComparableProducts(filteredProducts);
-
-      // Set the first product as default selection if available
-      if (filteredProducts.length > 0) {
-        setSelectedProduct(filteredProducts[0]);
-      }
-    } catch (error) {
-      console.error("Error fetching comparable products:", error);
-    } finally {
-      setLoading(false);
-    }
   };
 
   const handleClose = () => {
@@ -146,7 +124,6 @@ export default function CompareModal({
 
   const handleProductSelection = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedReviewID = e.target.value;
-    console.log("Selected Review ID:", selectedReviewID);
 
     if (!selectedReviewID) {
       setSelectedProduct(null);

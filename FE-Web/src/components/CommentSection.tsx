@@ -17,6 +17,10 @@ interface ProfileInfo {
   [key: string]: any;
 }
 
+interface CommentResponse {
+  comments: Comment[];
+}
+
 const CommentSection: React.FC<{ reviewID: string }> = ({ reviewID }) => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [commentText, setCommentText] = useState("");
@@ -50,22 +54,41 @@ const CommentSection: React.FC<{ reviewID: string }> = ({ reviewID }) => {
 
   const fetchComments = async () => {
     try {
-      const response = await axios.get<Comment[]>(
-        "http://localhost:8080/get/comment"
-      );
-      console.log("Full comments data:", response.data);
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error("No token found");
+        return;
+      }
 
-      // Ensure type compatibility between commentReviewID and reviewID
-      const filteredComments = response.data.filter(
-        (comment) => String(comment.commentReviewID) === String(reviewID)
-      );
-      console.log(
-        "Filtered comments for reviewID:",
-        reviewID,
-        filteredComments
+      // Mendapatkan data komentar dari API dengan tipe eksplisit CommentResponse
+      const response = await axios.get<CommentResponse>(
+        `http://127.0.0.1:8000/api/get/comments/${reviewID}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Sertakan token di header
+          },
+        }
       );
 
-      setComments(filteredComments);
+      console.log("Full comments data:", response.data); // Cek data yang diterima
+
+      // Cek apakah response.data adalah array atau objek dengan properti comments
+      if (Array.isArray(response.data)) {
+        const filteredComments = response.data.filter(
+          (comment) => String(comment.commentReviewID) === String(reviewID)
+        );
+        console.log("Filtered comments:", filteredComments);
+        setComments(filteredComments);
+      } else if (response.data && response.data.comments) {
+        // Jika data adalah objek dan memiliki properti 'comments'
+        const filteredComments = response.data.comments.filter(
+          (comment: Comment) => String(comment.commentReviewID) === String(reviewID)
+        );
+        console.log("Filtered comments from object:", filteredComments);
+        setComments(filteredComments);
+      } else {
+        console.error("Data yang diterima tidak memiliki properti comments atau bukan array:", response.data);
+      }
     } catch (error) {
       console.error("Error fetching comments:", error);
     }
@@ -87,8 +110,13 @@ const CommentSection: React.FC<{ reviewID: string }> = ({ reviewID }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/post/comment",
-        newComment
+        "http://127.0.0.1:8000/api/add/comment",
+        newComment,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
       );
       console.log("Comment posted response:", response.data);
       setCommentText("");

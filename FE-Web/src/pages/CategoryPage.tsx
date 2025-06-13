@@ -22,26 +22,9 @@ const categoryData = {
         title: "Smartphones",
         description: "Latest reviews of flagship and mid-range smartphones",
         image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&q=80&w=1400",
-        productType: "Smartphones",
+        productType: "Smartphone", // Update this
     },
-    laptops: {
-        title: "Laptops & Desktops",
-        description: "Professional reviews of the latest laptops and notebooks",
-        image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&q=80&w=1400",
-        productType: "Laptops",
-    },
-    consoles: {
-        title: "Consoles",
-        description: "Reviews of consoles, and its accessories",
-        image: "https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?auto=format&fit=crop&q=80&w=1400",
-        productType: "Consoles",
-    },
-    accessories: {
-        title: "Accessories",
-        description: "Expert reviews of headphones, speakers, and any other trendy accessories",
-        image: "https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&q=80&w=1400",
-        productType: "Accessories",
-    },
+    // Tambahkan kategori lain jika perlu
 };
 
 export default function CategoryPage() {
@@ -54,11 +37,29 @@ export default function CategoryPage() {
         if (data) {
             const loadReviews = async () => {
                 try {
-                    const result = await fetch("http://localhost:8080/get/review");
+                    // Ambil token dari localStorage
+                    const token = localStorage.getItem('token');
+                    if (!token) {
+                        console.error("Token tidak ditemukan. Anda perlu login.");
+                        return;
+                    }
+
+                    // Gunakan URL berdasarkan kategori
+                    const result = await fetch(`http://127.0.0.1:8000/api/get/review/${data.productType.toLowerCase()}`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`, // Kirimkan token di header
+                        },
+                    });
+
+                    if (!result.ok) {
+                        throw new Error(`HTTP error! status: ${result.status}`);
+                    }
+
                     const allReviews = await result.json();
 
                     // Filter reviews berdasarkan kategori
-                    const filteredReviews = allReviews.filter(
+                    const filteredReviews = allReviews.reviews.filter(
                         (review: any) => review.productType === data.productType
                     );
 
@@ -70,7 +71,7 @@ export default function CategoryPage() {
                         productType: review.productType,
                         price: review.price,
                         imageName: review.imageName,
-                        badge: review.rating >= 4.5 ? "Editor's Choice" : undefined,
+                        badge: review.rating >= 4.5 ? "Top Rated" : undefined,
                         date: review.date,
                         rating: review.rating,
                     }));
