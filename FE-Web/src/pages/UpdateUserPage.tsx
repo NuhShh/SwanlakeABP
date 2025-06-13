@@ -6,7 +6,7 @@ interface ReqRes {
   statusCode?: number;
   message?: string;
   error?: string;
-  account?: Account;
+  user?: Account; // Ganti 'account' menjadi 'user' sesuai respons
 }
 
 interface Account {
@@ -27,12 +27,23 @@ const UserUpdatePage: React.FC = () => {
 
   useEffect(() => {
     if (accountID) {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setError("Token not found. Please log in.");
+        return;
+      }
+
+      // Memperbaiki pengambilan data berdasarkan struktur respons (user bukannya account)
       axios
-        .get<ReqRes>(`http://localhost:8080/get/account/${accountID}`)
+        .get<ReqRes>(`http://127.0.0.1:8000/api/get/user/${accountID}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
         .then((response) => {
-          const { account } = response.data;
-          if (account) {
-            setFormValues(account);
+          const { user } = response.data;  // Ambil user, bukan account
+          if (user) {
+            setFormValues(user);  // Set formValues menggunakan data user
           } else {
             setError("Account not found.");
           }
@@ -54,17 +65,28 @@ const UserUpdatePage: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (accountID) {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        setError("Token not found. Please log in.");
+        return;
+      }
+
       axios
-        .put<ReqRes>(`http://localhost:8080/put/account/${accountID}`, {
+        .put<ReqRes>(`http://127.0.0.1:8000/api/update/user/${accountID}`, {
           name: formValues.name,
           email: formValues.email,
           role: formValues.role,
           password: formValues.password,
+        }, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
         })
         .then((response) => {
           const { message } = response.data;
           alert(message || "Account updated successfully!");
-          navigate("/user-management"); 
+          navigate("/user-management");
         })
         .catch(() => {
           setError("Failed to update account.");

@@ -9,7 +9,7 @@ interface FormData {
   role: string;
 }
 
-function RegistrationPage() {
+const AddAdminPage: React.FC = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState<FormData>({
@@ -34,19 +34,18 @@ function RegistrationPage() {
           name: "",
           email: "",
           password: "",
-          role: "ADMIN",
+          role: "ADMIN", // Role for admin
         });
-        alert("User registered successfully");
+        alert("Admin registered successfully");
         navigate("/user-management");
       } else {
-
         alert(response.message);
       }
     } catch (error: any) {
-      console.error("Error registering user:", error);
+      console.error("Error registering admin:", error);
       alert(
         error.response?.data?.message ||
-          "An error occurred while registering user"
+          "An error occurred while registering admin"
       );
     }
   };
@@ -106,7 +105,7 @@ function RegistrationPage() {
             type="submit"
             className="w-full py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            Register
+            Register Admin
           </button>
         </form>
         <button
@@ -118,6 +117,6 @@ function RegistrationPage() {
       </div>
     </div>
   );
-}
+};
 
-export default RegistrationPage;
+export default AddAdminPage;

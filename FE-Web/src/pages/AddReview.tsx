@@ -30,6 +30,7 @@ const AddReview: React.FC = () => {
     performance: "",
   });
 
+  // Handle input change for form fields
   const handleInputChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -39,15 +40,30 @@ const AddReview: React.FC = () => {
     setFormValues((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Token not found. Please log in.");
+      return;
+    }
+
     try {
-      const response = await axios.post("http://localhost:8080/post/review", {
-        ...formValues,
-        price: parseInt(formValues.price, 10),
-        rating: parseFloat(formValues.rating),
-      });
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/post/review",
+        {
+          ...formValues,
+          price: parseInt(formValues.price, 10),
+          rating: parseFloat(formValues.rating),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       alert("Review added successfully!");
       navigate("/review-management");
     } catch (error) {
@@ -55,6 +71,7 @@ const AddReview: React.FC = () => {
     }
   };
 
+  // Handle cancel button
   const handleCancel = () => {
     navigate("/review-management");
   };
@@ -93,10 +110,10 @@ const AddReview: React.FC = () => {
               <option value="" disabled>
                 Select Product Type
               </option>
-              <option value="Smartphones">Smartphones</option>
-              <option value="Laptops">Laptops</option>
+              <option value="Smartphone">Smartphons</option>
+              <option value="Desktop & Laptop">Desktop & Laptop</option>
               <option value="Accessories">Accessories</option>
-              <option value="Consoles">Consoles</option>
+              <option value="Console">Console</option>
             </select>
           </div>
           <div>
@@ -112,6 +129,8 @@ const AddReview: React.FC = () => {
               required
             />
           </div>
+
+          {/* Other fields */}
           <div>
             <label className="block text-lg font-medium text-gray-600">
               Card Description
@@ -285,6 +304,8 @@ const AddReview: React.FC = () => {
               className="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-blue-200"
             ></textarea>
           </div>
+
+          {/* Add the new fields */}
           <div>
             <label className="block text-lg font-medium text-gray-600">
               Image Name

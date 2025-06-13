@@ -12,17 +12,30 @@ const LoginPage: React.FC = () => {
     e.preventDefault();
 
     try {
-      const userData = await UserService.login(email, password);
+  const userData = await UserService.login(email, password);
 
-      if ("token" in userData) {
-        localStorage.setItem("token", userData.token);
-        navigate("/homepage");
-      } else if ("message" in userData) {
-        setError(userData.message);
-      }
-    } catch (error: any) {
-      setError("An error occurred. Please try again.");
+  // Asumsikan userData memiliki token dan role
+  if ("token" in userData) {
+    localStorage.setItem("token", userData.token);
+
+    // Jika `userData` memiliki properti user, ambil role dari sana
+    const role = userData.role || (userData as any).user?.role;
+
+    if (role) {
+      localStorage.setItem("role", role);
+    } else {
+      console.warn("Role not found in response.");
     }
+
+    navigate("/homepage");
+  } else if ("message" in userData) {
+    setError(userData.message);
+  }
+} catch (error: any) {
+  setError("An error occurred. Please try again.");
+}
+
+
   };
 
   return (

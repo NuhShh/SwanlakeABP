@@ -13,41 +13,60 @@ interface Review {
   price: number;
   imageName: string;
   badge?: string;
-  date?: string;
+  createdAt?: string;
   rating: number;
   views: number;
   likes: number;
 }
 
-export default function TrendingReviewsPage() {
-  const [trendingReviews, setTrendingReviews] = useState<Review[]>([]);
+function formatDate(dateStr: string): string {
+  try {
+    const dt = new Date(dateStr);
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    return `${dt.getDate().toString().padStart(2, "0")} ${months[dt.getMonth()]} ${dt.getFullYear()}`;
+  } catch {
+    return dateStr;
+  }
+}
+
+export default function LatestReviewsPage() {
+  const [latestReviews, setLatestReviews] = useState<Review[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const loadTrendingReviews = async () => {
+    const fetchLatest = async () => {
       try {
-        const result = await fetch("http://localhost:8080/get/review");
-        const allReviews = await result.json();
+        const token = localStorage.getItem("token");
+        if (!token) {
+          console.error("Token tidak ditemukan.");
+          return;
+        }
 
-        // Map data dari API ke struktur yang diinginkan
-        const formattedReviews = allReviews.map((review: any) => ({
-          reviewID: review.reviewID,
-          productName: review.productName,
-          reviewTitle: review.reviewTitle,
-          cardDesc: review.cardDesc,
-          productType: review.productType,
-          price: review.price,
-          imageName: review.imageName,
-          badge: undefined,
-          date: review.date || "N/A",
-          rating: review.rating,
-          views: review.views,
-          likes: review.likes,
-        }));
+        const result = await fetch("http://127.0.0.1:8000/api/get/review", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
-        setTrendingReviews(formattedReviews);
+        const data = await result.json();
 
-        // Animasi untuk kartu
+        const formatted = data.reviews
+          .filter((r: any) => r.created_at)
+          .sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+          .map((r: any) => ({
+            reviewID: r.reviewID,
+            productName: r.productName,
+            reviewTitle: r.reviewTitle,
+            cardDesc: r.cardDesc,
+            productType: r.productType,
+            price: r.price,
+            imageName: r.imageName,
+            createdAt: r.created_at,
+            rating: r.rating,
+            views: r.views,
+            likes: r.likes,
+          }));
+
+        setLatestReviews(formatted);
+
         gsap.fromTo(
           ".review-card",
           { opacity: 0, scale: 0.8 },
@@ -60,16 +79,16 @@ export default function TrendingReviewsPage() {
           }
         );
       } catch (error) {
-        console.error("Error fetching reviews:", error);
+        console.error("Error fetching latest reviews:", error);
       }
     };
 
-    loadTrendingReviews();
+    fetchLatest();
   }, []);
 
   return (
     <div className="min-h-screen dark:bg-black">
-      {/* Tombol Back */}
+      {/* Back Button */}
       <div className="fixed top-4 left-4 z-50">
         <button
           onClick={() => navigate("/")}
@@ -90,31 +109,30 @@ export default function TrendingReviewsPage() {
         }}
       >
         <div className="text-center text-white">
-          <h1 className="text-5xl font-bold mb-4">Newest Reviews</h1>
+          <h1 className="text-5xl font-bold mb-4">Latest Reviews</h1>
           <p className="text-xl max-w-2xl mx-auto">
-            Discover the latest review everyone is talking about.
+            Discover the newest reviews, fresh from our editors.
           </p>
         </div>
       </div>
 
-      {/* Konten */}
+      {/* Content */}
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="flex justify-between items-center mb-8">
           <p className="text-gray-600 dark:text-white/80">
-            Showing {trendingReviews.length} newest reviews
+            Showing {latestReviews.length} reviews
           </p>
         </div>
 
-        {/* Review Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {trendingReviews.map((review, index) => (
+          {latestReviews.map((review, index) => (
             <ReviewCard
               key={review.reviewID}
               image={review.imageName}
               title={review.reviewTitle}
               description={review.cardDesc}
-              date={review.date || "N/A"}
-              badge={review.badge}
+              date={`Reviewed on ${formatDate(review.createdAt || "")}`}
+              badge={undefined}
               reviewID={`${review.reviewID}`}
               index={index}
             />

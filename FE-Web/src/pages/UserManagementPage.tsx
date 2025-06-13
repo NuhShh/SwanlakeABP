@@ -24,7 +24,13 @@ function UserManagementPage() {
         return;
       }
       const response = await UserService.getAllUsers(token);
-      setUsers(response.accountList);
+
+      // Menggunakan 'users' dari response
+      if (response && response.users) {
+        setUsers(response.users); // Mengambil data users dari response
+      } else {
+        setError("No users found.");
+      }
     } catch (error) {
       console.error("Error fetching users:", error);
       setError("Failed to fetch users. Please try again later.");
@@ -79,7 +85,7 @@ function UserManagementPage() {
         <p className="text-center text-gray-500 dark:text-white">Loading users...</p>
       ) : error ? (
         <p className="text-center text-red-500">{error}</p>
-      ) : users.length > 0 ? (
+      ) : Array.isArray(users) && users.length > 0 ? (
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white border border-gray-200 shadow rounded-lg">
             <thead>

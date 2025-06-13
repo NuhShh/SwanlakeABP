@@ -28,34 +28,33 @@ function RegistrationPage() {
 
   // Fungsi untuk menangani submit form
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // Mencegah form default action
+  e.preventDefault();
 
-    try {
-      // Mengirim data registrasi melalui service
-      const response = await UserService.register(formData);
+  try {
+    const response = await UserService.register(formData);
 
-      // Jika registrasi berhasil
-      if (response.message === "User Saved Successfully") {
-        setFormData({
-          name: "",
-          email: "",
-          password: "",
-          role: "USER", // Reset form
-        });
-        alert("User registered successfully");
-        navigate("/login"); // Navigasi ke halaman login setelah registrasi berhasil
-      } else {
-        // Jika ada pesan error dari backend
-        alert(response.message || "Registration failed");
-      }
-    } catch (error: any) {
-      // Jika terjadi error saat request API
-      console.error("Error registering user:", error);
-      alert(
-        error.response?.data?.message || "An error occurred while registering user"
-      );
+    if (response.message === "User Saved Successfully") {
+      // Reset form on success
+      setFormData({
+        name: "",
+        email: "",
+        password: "",
+        role: "USER",
+      });
+
+      alert("User registered successfully");
+      navigate("/");  // Navigate to login page after successful registration
+    } else {
+      // If the backend response message is different
+      alert(response.message || "Registration failed");
     }
-  };
+  } catch (error: any) {
+    // If error occurred during API call
+    console.error("Error registering user:", error);
+    alert(error.response?.data?.message || "An error occurred while registering user");
+  }
+};
+
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">
@@ -117,7 +116,7 @@ function RegistrationPage() {
         <p className="mt-4 text-center text-gray-600">
           Already have an account?{" "}
           <a
-            href="/login" // Menggunakan <a> bisa, tapi lebih baik pakai Link jika menggunakan react-router
+            href="/" // Menggunakan <a> bisa, tapi lebih baik pakai Link jika menggunakan react-router
             className="text-blue-500 hover:underline"
           >
             Login here

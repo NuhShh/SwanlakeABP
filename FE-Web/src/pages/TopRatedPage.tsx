@@ -24,20 +24,37 @@ export default function TopRatedReviewsPage() {
   useEffect(() => {
     const loadReviews = async () => {
       try {
-        const result = await fetch("http://localhost:8080/get/review");
-        const allReviews = await result.json();
+        const token = localStorage.getItem("token");
+        if (!token) {
+          console.error("Token tidak ditemukan. Harap login terlebih dahulu.");
+          return;
+        }
 
-        // Filter reviews dengan rating >= 4.5 dan tambahkan badge
-        const topRated = allReviews
+        const result = await fetch("http://127.0.0.1:8000/api/get/review", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const data = await result.json();
+
+        const filtered = data.reviews
           .filter((review: any) => review.rating >= 4.5)
           .map((review: any) => ({
-            ...review,
+            reviewID: review.reviewID,
+            productName: review.productName,
+            reviewTitle: review.reviewTitle,
+            cardDesc: review.cardDesc,
+            productType: review.productType,
+            price: review.price,
+            imageName: review.imageName,
             badge: "Top Rated",
+            date: review.date,
+            rating: review.rating,
           }));
 
-        setReviews(topRated);
+        setReviews(filtered);
 
-        // Animasi untuk kartu
         gsap.fromTo(
           ".review-card",
           { opacity: 0, scale: 0.8 },
@@ -121,4 +138,3 @@ export default function TopRatedReviewsPage() {
     </div>
   );
 }
-

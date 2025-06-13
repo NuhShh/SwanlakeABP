@@ -2,6 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
+interface ReqRes {
+  statusCode?: number;
+  message?: string;
+  error?: string;
+  review?: Review;
+}
+
 interface Review {
   productName: string;
   productType: string;
@@ -37,10 +44,25 @@ const UpdateReviewPage: React.FC = () => {
 
   useEffect(() => {
     if (reviewID) {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setError("Token not found. Please log in.");
+        return;
+      }
+
       axios
-        .get<Review>(`http://localhost:8080/get/review/${reviewID}`)
+        .get<ReqRes>(`http://127.0.0.1:8000/api/get/review/${reviewID}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
         .then((response) => {
-          setFormValues(response.data);
+          const { review } = response.data;
+          if (review) {
+            setFormValues(review);
+          } else {
+            setError("Review not found.");
+          }
         })
         .catch(() => {
           setError("Failed to fetch review details.");
@@ -51,7 +73,7 @@ const UpdateReviewPage: React.FC = () => {
 
   const handleInputChange = (
     e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >
   ) => {
     const { name, value } = e.target;
@@ -61,10 +83,22 @@ const UpdateReviewPage: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (reviewID) {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        setError("Token not found. Please log in.");
+        return;
+      }
+
       axios
-        .put(`http://localhost:8080/put/review/${reviewID}`, formValues)
-        .then(() => {
-          alert("Review updated successfully!");
+        .put<ReqRes>(`http://127.0.0.1:8000/api/update/review/${reviewID}`, formValues, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        })
+        .then((response) => {
+          const { message } = response.data;
+          alert(message || "Review updated successfully!");
           navigate("/review-management");
         })
         .catch(() => {
@@ -93,7 +127,6 @@ const UpdateReviewPage: React.FC = () => {
           Update Review
         </h1>
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Form Fields */}
           <div>
             <label className="block text-lg font-medium text-gray-600">
               Product Name
@@ -119,10 +152,10 @@ const UpdateReviewPage: React.FC = () => {
               <option value="" disabled>
                 Select Product Type
               </option>
-              <option value="Smartphones">Smartphones</option>
-              <option value="Laptops">Laptops</option>
+              <option value="Smartphone">Smartphone</option>
+              <option value="Desktop & Laptop">Desktop & Laptop</option>
               <option value="Accessories">Accessories</option>
-              <option value="Consoles">Consoles</option>
+              <option value="Console">Console</option>
             </select>
           </div>
           <div>
@@ -137,6 +170,8 @@ const UpdateReviewPage: React.FC = () => {
               className="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-blue-200"
             />
           </div>
+
+          {/* Add fields for cardDesc, processor, processorDesc, RAM, etc. */}
           <div>
             <label className="block text-lg font-medium text-gray-600">
               Card Description
@@ -319,38 +354,36 @@ const UpdateReviewPage: React.FC = () => {
           </div>
           <div>
             <label className="block text-lg font-medium text-gray-600">
-              Image Name
+              Image Link
             </label>
-            <input
-              type="text"
-              name="imageName"
+            <textarea
+              name="reviewText"
               value={formValues.imageName || ""}
               onChange={handleInputChange}
               className="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-blue-200"
-            />
+              rows={6}
+            ></textarea>
           </div>
           <div>
             <label className="block text-lg font-medium text-gray-600">
               Rating
             </label>
-            <input
-              type="number"
-              name="rating"
+            <textarea
+              name="reviewText"
               value={formValues.rating || ""}
               onChange={handleInputChange}
               className="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-blue-200"
-            />
+            ></textarea>
           </div>
           <div>
             <label className="block text-lg font-medium text-gray-600">
               Key Features
             </label>
             <textarea
-              name="keyFeatures"
+              name="reviewText"
               value={formValues.keyFeatures || ""}
               onChange={handleInputChange}
               className="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-blue-200"
-              rows={3}
             ></textarea>
           </div>
           <div>
@@ -358,11 +391,11 @@ const UpdateReviewPage: React.FC = () => {
               Performance
             </label>
             <textarea
-              name="performance"
+              name="reviewText"
               value={formValues.performance || ""}
               onChange={handleInputChange}
               className="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-blue-200"
-              rows={3}
+              rows={6}
             ></textarea>
           </div>
 

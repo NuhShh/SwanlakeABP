@@ -22,9 +22,26 @@ const categoryData = {
         title: "Smartphones",
         description: "Latest reviews of flagship and mid-range smartphones",
         image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&q=80&w=1400",
-        productType: "Smartphone", // Update this
+        productType: "Smartphone",
     },
-    // Tambahkan kategori lain jika perlu
+    laptops: {
+        title: "Laptops & Desktops",
+        description: "Professional reviews of the latest laptops and notebooks",
+        image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&q=80&w=1400",
+        productType: "desktop & laptop",
+    },
+    consoles: {
+        title: "Consoles",
+        description: "Reviews of consoles, and its accessories",
+        image: "https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?auto=format&fit=crop&q=80&w=1400",
+        productType: "Console",
+    },
+    accessories: {
+        title: "Accessories",
+        description: "Expert reviews of headphones, speakers, and any other trendy accessories",
+        image: "https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&q=80&w=1400",
+        productType: "Accessories",
+    },
 };
 
 export default function CategoryPage() {
@@ -36,64 +53,58 @@ export default function CategoryPage() {
     useEffect(() => {
         if (data) {
             const loadReviews = async () => {
-                try {
-                    // Ambil token dari localStorage
-                    const token = localStorage.getItem('token');
-                    if (!token) {
-                        console.error("Token tidak ditemukan. Anda perlu login.");
-                        return;
-                    }
+  try {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.error("Token tidak ditemukan. Anda perlu login.");
+      return;
+    }
 
-                    // Gunakan URL berdasarkan kategori
-                    const result = await fetch(`http://127.0.0.1:8000/api/get/review/${data.productType.toLowerCase()}`, {
-                        method: 'GET',
-                        headers: {
-                            'Authorization': `Bearer ${token}`, // Kirimkan token di header
-                        },
-                    });
+    const result = await fetch(`http://127.0.0.1:8000/api/get/review`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
 
-                    if (!result.ok) {
-                        throw new Error(`HTTP error! status: ${result.status}`);
-                    }
+    if (!result.ok) {
+      throw new Error(`HTTP error! status: ${result.status}`);
+    }
 
-                    const allReviews = await result.json();
+    const allData = await result.json();
+    const filtered = allData.reviews.filter(
+      (r: any) =>
+        r.productType?.toLowerCase() === data.productType.toLowerCase()
+    );
 
-                    // Filter reviews berdasarkan kategori
-                    const filteredReviews = allReviews.reviews.filter(
-                        (review: any) => review.productType === data.productType
-                    );
+    const formatted = filtered.map((r: any) => ({
+      reviewID: r.reviewID,
+      productName: r.productName,
+      reviewTitle: r.reviewTitle,
+      cardDesc: r.cardDesc,
+      productType: r.productType,
+      price: r.price,
+      imageName: r.imageName,
+      badge: r.rating >= 4.5 ? "Top Rated" : undefined,
+      date: r.date,
+      rating: r.rating,
+    }));
 
-                    const formattedData = filteredReviews.map((review: any) => ({
-                        reviewID: review.reviewID,
-                        productName: review.productName,
-                        reviewTitle: review.reviewTitle,
-                        cardDesc: review.cardDesc,
-                        productType: review.productType,
-                        price: review.price,
-                        imageName: review.imageName,
-                        badge: review.rating >= 4.5 ? "Top Rated" : undefined,
-                        date: review.date,
-                        rating: review.rating,
-                    }));
+    setReviews(formatted);
 
-                    setReviews(formattedData);
+    gsap.fromTo(
+      ".review-card",
+      { opacity: 0, scale: 0.8 },
+      {
+        opacity: 1,
+        scale: 1,
+        duration: 0.8,
+        ease: "power3.out",
+        stagger: 0.2,
+      }
+    );
+  } catch (error) {
+    console.error("Error fetching reviews:", error);
+  }
+};
 
-                    // Animasi untuk kartu
-                    gsap.fromTo(
-                        ".review-card",
-                        { opacity: 0, scale: 0.8 },
-                        {
-                            opacity: 1,
-                            scale: 1,
-                            duration: 0.8,
-                            ease: "power3.out",
-                            stagger: 0.2,
-                        }
-                    );
-                } catch (error) {
-                    console.error("Error fetching reviews:", error);
-                }
-            };
 
             loadReviews();
         }

@@ -16,8 +16,9 @@ interface UserData {
 }
 
 class UserService {
-  static BASE_URL: string = "http://127.0.0.1:8000/api";
+  static BASE_URL: string = "http://127.0.0.1:8000/api"; // Pastikan URL ini sesuai dengan API kamu
 
+  // Login function
   static async login(
     email: string,
     password: string
@@ -35,6 +36,7 @@ class UserService {
     }
   }
 
+  // Register function
   static async register(userData: UserData): Promise<{ message: string }> {
     try {
       const response: AxiosResponse<{ message: string }> = await axios.post(
@@ -43,7 +45,6 @@ class UserService {
       );
       return response.data;
     } catch (err: any) {
-      // Pass backend error message to frontend
       if (err.response?.data?.message) {
         throw new Error(err.response.data.message);
       }
@@ -51,11 +52,12 @@ class UserService {
     }
   }
 
-  static async getAllUsers(token: string): Promise<{ accountList: Profile[] }> {
+  // Get all users - Updated route
+  static async getAllUsers(token: string): Promise<{ users: Profile[] }> {
     try {
-      const response: AxiosResponse<{ accountList: Profile[] }> =
-        await axios.get(`${UserService.BASE_URL}/admin/get-all-users`, {
-          headers: { Authorization: `Bearer ${token}` },
+      const response: AxiosResponse<{ users: Profile[] }> =
+        await axios.get(`${UserService.BASE_URL}/get/user`, {
+          headers: { Authorization: `Bearer ${token}` }, // Token dikirimkan di header
         });
       return response.data;
     } catch (err) {
@@ -63,6 +65,7 @@ class UserService {
     }
   }
 
+  // Get profile function
   static async getYourProfile(token: string): Promise<Profile> {
     try {
       const response: AxiosResponse<Profile> = await axios.get(
@@ -77,10 +80,11 @@ class UserService {
     }
   }
 
+  // Get user by ID
   static async getUserById(accountID: string, token: string): Promise<Profile> {
     try {
       const response: AxiosResponse<Profile> = await axios.get(
-        `${UserService.BASE_URL}/admin/get-users/${accountID}`,
+        `${UserService.BASE_URL}/get/user${accountID}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -91,13 +95,14 @@ class UserService {
     }
   }
 
+  // Delete user function
   static async deleteUser(
     accountID: string,
     token: string
   ): Promise<{ message: string }> {
     try {
       const response: AxiosResponse<{ message: string }> = await axios.delete(
-        `${UserService.BASE_URL}/admin/delete/${accountID}`,
+        `${UserService.BASE_URL}/delete/user/${accountID}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -108,6 +113,7 @@ class UserService {
     }
   }
 
+  // Update user function
   static async updateUser(
     accountID: string,
     userData: Partial<UserData>,
@@ -115,7 +121,7 @@ class UserService {
   ): Promise<{ message: string }> {
     try {
       const response: AxiosResponse<{ message: string }> = await axios.put(
-        `${UserService.BASE_URL}/admin/update/${accountID}`,
+        `${UserService.BASE_URL}/update/user/${accountID}`,
         userData,
         {
           headers: { Authorization: `Bearer ${token}` },
