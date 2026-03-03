@@ -1,6 +1,6 @@
-# SwanlakeABP - Tech Review Platform
+# Swanlake - Tech Review Platform
 
-SwanlakeABP is a web and mobile-based application designed to help users explore and review the latest technologies. With so many products on the market, this platform aims to guide users in making informed decisions through community-driven insights.
+Swanlake is a web and mobile-based application designed to help users explore and review the latest technologies. With so many products on the market, this platform aims to guide users in making informed decisions through community-driven insights.
 
 ## 📱 Platforms
 - **Web Frontend:** React.js
